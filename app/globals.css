@@ -2,26 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@layer base {
+    body {
+        @apply bg-gradient-to-l from-slate-900 via-gray-950 to-slate-900;
+    }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@font-face {
+    font-family: 'GeistMono';
+    src: url('/fonts/GeistMonoVF.woff') format('woff');
+}
+
+.font-geistmono {
+    font-family: 'GeistMono', monospace;
+}
+
+.custom-pulse {
+    animation: pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
   }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  50% {
+    opacity: .5;
   }
 }

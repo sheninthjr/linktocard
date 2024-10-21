@@ -1,101 +1,122 @@
-import Image from "next/image";
+'use client'
+import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+const iconVariant = (x:number, y:number) => ({
+    hidden: { opacity: 0, x, y, scale: 0 },
+    visible: { opacity: 1, x: 0, y: 0, scale: 1, transition: { type: 'spring', stiffness: 120, damping: 10 } }
+});
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+const characterVariant = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 120, damping: 10 } }
+};
+
+const containerVariant = {
+    hidden: { opacity: 1 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.3,
+        }
+    }
+};
+
+export default function Landing() {
+    const router = useRouter();
+    const title = "LinkToPost";
+
+    return (
+        <div className="flex flex-col justify-center overflow-hidden items-center h-screen text-white">
+            <motion.div
+                className="font-extrabold mb-4 font-serif flex items-end"
+                variants={containerVariant}
+                initial="hidden"
+                animate="visible"
+            >
+                {title.split("").map((char, index) => (
+                    <motion.span
+                        key={index}
+                        variants={characterVariant}
+                        className={char === 'L' || char === 'P' ? 'text-8xl' : 'text-5xl md:text-6xl pb-2'}
+                    >
+                        {char}
+                    </motion.span>
+                ))}
+            </motion.div>
+
+            <div className="text-lg m-3 text-neutral-400 md:text-2xl mb-8 text-justify" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                Turn your URL into a sharable post across multiple platforms!
+            </div>
+
+            <button
+                onClick={() => router.push('/home')}
+                className="mt-6 bg-white text-black font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition duration-300"
+            >
+                Get Started
+            </button>
+
+            <motion.div
+                className="flex space-x-6 mt-12"
+                variants={containerVariant}
+                initial="hidden"
+                animate="visible"
+            >
+                <motion.a
+                    href="https://twitter.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variants={iconVariant(-500, -500)}
+                    whileHover={{ scale: 1.5, rotate: 10 }}
+                    whileTap={{ scale: 0.9 }}
+                >
+                    <img src="/twitter.png" alt="Twitter" className="w-10 bg-white rounded-lg border h-10" />
+                </motion.a>
+
+                <motion.a
+                    href="https://instagram.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variants={iconVariant(500, -500)}
+                    whileHover={{ scale: 1.5, rotate: 10 }}
+                    whileTap={{ scale: 0.9 }}
+                >
+                    <img src="/insta.webp" alt="Instagram" className="w-10 h-10" />
+                </motion.a>
+
+                <motion.a
+                    href="https://linkedin.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variants={iconVariant(-500, 500)}
+                    whileHover={{ scale: 1.5, rotate: 10 }}
+                    whileTap={{ scale: 0.9 }}
+                >
+                    <img src="/linkedin.png" alt="LinkedIn" className="w-11 rounded-full h-11" />
+                </motion.a>
+
+                <motion.a
+                    href="https://facebook.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variants={iconVariant(500, 500)}
+                    whileHover={{ scale: 1.5, rotate: 10 }}
+                    whileTap={{ scale: 0.9 }}
+                >
+                    <img src="/face.png" alt="Facebook" className="w-10 h-10" />
+                </motion.a>
+
+                <motion.a
+                    href="https://youtube.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variants={iconVariant(0, 500)}
+                    whileHover={{ scale: 1.5, rotate: 10 }}
+                    whileTap={{ scale: 0.9 }}
+                >
+                    <img src="/yt.png" alt="YouTube" className="w-12 h-12" />
+                </motion.a>
+            </motion.div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+    );
 }
