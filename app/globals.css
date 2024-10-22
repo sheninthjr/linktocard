@@ -8,15 +8,6 @@
     }
 }
 
-@font-face {
-    font-family: 'GeistMono';
-    src: url('/fonts/GeistMonoVF.woff') format('woff');
-}
-
-.font-geistmono {
-    font-family: 'GeistMono', monospace;
-}
-
 .custom-pulse {
     animation: pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
