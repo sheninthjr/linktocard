@@ -3,7 +3,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 
 export const metadata: Metadata = {
-  title: "Link to Post",
+  title: "LinkToPost",
   description: "Created by sheninthjr",
 };
 

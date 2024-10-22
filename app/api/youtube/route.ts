@@ -35,10 +35,10 @@ const fetchYouTubeData = async (url: string) => {
         const $ = cheerio.load(data);
         const title = $('meta[name="title"]').attr('content');
         const description = $('meta[name="description"]').attr('content');
-        const imageSrc = $('link[rel="image_src"]').attr('href');
+        const imageSrc = $('link[rel="image_src"]').attr('href') || "";
         const userName = $('span[itemprop="author"] link[itemprop="name"]').attr('content');
-        const id = $('span[itemprop="author"] link[itemprop="url"]').attr('href');
-        const userId = id.split('http://www.youtube.com/@')[1];
+        const id = $('span[itemprop="author"] link[itemprop="url"]').attr('href') || "";
+        const userId = id?.split('http://www.youtube.com/@')[1];
         const imagePath = await downloadImage(imageSrc, `${userId}-thumbnail.jpg`);
         const profile = await fetchYTProfile(userId);
 
@@ -52,6 +52,7 @@ const fetchYouTubeData = async (url: string) => {
             imagePath
         };
     } catch (error) {
+        console.log(error);
         throw new Error('Could not fetch data');
     }
 };
@@ -65,9 +66,9 @@ export async function POST(req:NextRequest) {
 
     try {
         const videoData = await fetchYouTubeData(url);
-        console.log(videoData)
         return NextResponse.json(videoData);
     } catch (error) {
+        console.log(error)
         return NextResponse.json({
             message:"Error while extracting"
         })

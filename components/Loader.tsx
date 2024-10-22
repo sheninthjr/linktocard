@@ -61,10 +61,7 @@ export function Loader() {
             ></animate>
           </circle>
         </svg>
-        <p className="mt-[20px] font-epilogue font-bold text-[20px] text-white text-center">
-          Please wait...
-          <br />
-          We're fetching the data
+        <p className="mt-[20px] font-epilogue font-bold text-[20px] text-white text-center">Please wait...<br />We&apos;re fetching the data
         </p>
       </div>
     );

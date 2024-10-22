@@ -1,8 +1,8 @@
 import fs from 'fs';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import path from 'path';
 
-export async function POST(_req:NextRequest) {
+export async function POST() {
     const publicDir = path.join(process.cwd(),'public/uploads');
     fs.readdir(publicDir,(err,files) => {
         if(err) {

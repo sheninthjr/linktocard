@@ -6,7 +6,7 @@ import { Sidebar } from "@/components/Sidebar";
 
 
 export const metadata: Metadata = {
-    title: "Link to Post",
+    title: "LinkToPost",
     description: "Created by sheninthjr",
   };
 

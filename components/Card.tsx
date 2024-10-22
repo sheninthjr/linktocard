@@ -3,7 +3,7 @@ import html2canvas from 'html2canvas-pro';
 import axios from 'axios';
 import { ChartLine, Download, HandHeart, Link } from "lucide-react";
 import { Response } from './HomePage';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function Card({
     title,
@@ -13,7 +13,7 @@ export function Card({
     userName,
     userId,
     imagePath
-}: Response | any) {
+}: Response) {
     const [shareUrl, setShareUrl] = useState('');
     const [isLoading,setIsLoading] = useState(false);
 
@@ -82,12 +82,8 @@ export function Card({
         }
     }
 
-    const hasRun = useRef(false);
     useEffect(() => {
-        if(!hasRun.current) {
-            handleShareUpload();
-            hasRun.current = true;
-        }
+        handleShareUpload();
     },[])
 
     return (

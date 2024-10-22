@@ -7,9 +7,9 @@ import { Loader } from "./Loader";
 export interface Response {
     title: string;
     description:string;
-    imageSrc:string;
-    url:string;
     profile:string;
+    url:string;
+    imagePath:string;
     userName:string;
     userId:string;
 }
