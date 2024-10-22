@@ -4,6 +4,7 @@ import axios from 'axios';
 import { ChartLine, Download, HandHeart, Link } from "lucide-react";
 import { Response } from './HomePage';
 import { useEffect, useState } from 'react';
+import { NEXT_PUBLIC_API_KEY, NEXT_PUBLIC_UPLOAD_PRESET } from '@/config';
 
 export function Card({
     title,
@@ -62,12 +63,10 @@ export function Card({
             return null;
         }
         const formData = new FormData();
-        const api_key = process.env.NEXT_PUBLIC_API_KEY as string;
-        const upload_preset = process.env.NEXT_PUBLIC_UPLOAD_PRESET as string;
         formData.append('file', imageBlob);
-        formData.append('upload_preset', upload_preset);
+        formData.append('upload_preset', NEXT_PUBLIC_UPLOAD_PRESET);
         formData.append('public_id', publicId);
-        formData.append('api_key', api_key);
+        formData.append('api_key', NEXT_PUBLIC_API_KEY);
         try {
             const uploadResponse = await axios.post(
                 'https://api.cloudinary.com/v1_1/linktopost/image/upload',
@@ -94,9 +93,9 @@ export function Card({
                 <div className="rounded-2xl">
                     <div className="flex items-end relative">
                         <img src={imagePath} alt="Thumbnail" className="w-full object-cover h-48 rounded-t-2xl" />
-                        <div className="absolute z-8 flex-1 bg-white/30 backdrop-blur-md min-w-[346px] h-14 rounded-t-2xl"></div>
+                        <div className="absolute z-8 flex-1 bg-white/80 backdrop-blur-md min-w-[346px] h-14 rounded-t-2xl"></div>
                         <img src="./yt.png" alt="icon" className="w-12 h-12 absolute z-5 mb-8 ml-5 rounded-xl bg-white" />
-                        <div className="flex-1 absolute z-9 font-bold text-lg text-white justify-center pl-16 pb-4 truncate w-[320px] text-start">{title}</div>
+                        <div className="flex-1 absolute z-9 font-bold text-lg text-black justify-center pl-16 pb-3 truncate w-[310px] text-start">{title}</div>
                     </div>
                     <div className="p-4 bg-black rounded-b-2xl space-y-4">
                         <div className="flex gap-4 itemd:ml-8ms-center">

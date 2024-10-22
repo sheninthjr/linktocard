@@ -1,0 +1,2 @@
+export const NEXT_PUBLIC_UPLOAD_PRESET= 'linktopost'
+export const NEXT_PUBLIC_API_KEY='523412351826458'
