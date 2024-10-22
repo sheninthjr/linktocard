@@ -62,10 +62,12 @@ export function Card({
             return null;
         }
         const formData = new FormData();
+        const api_key = process.env.NEXT_PUBLIC_API_KEY as string;
+        const upload_preset = process.env.NEXT_PUBLIC_UPLOAD_PRESET as string;
         formData.append('file', imageBlob);
-        formData.append('upload_preset', 'linktopost');
+        formData.append('upload_preset', upload_preset);
         formData.append('public_id', publicId);
-        formData.append('api_key', '523412351826458');
+        formData.append('api_key', api_key);
         try {
             const uploadResponse = await axios.post(
                 'https://api.cloudinary.com/v1_1/linktopost/image/upload',
@@ -91,9 +93,9 @@ export function Card({
             <div id="card" className="w-[360px] md:w-[380px] border p-4 rounded-2xl bg-slate-950 overflow-hidden">
                 <div className="rounded-2xl">
                     <div className="flex items-end relative">
-                        <img src={`${imagePath.split('/public')[1]}`} alt="Thumbnail" className="w-full object-cover h-72 rounded-t-2xl" />
-                        <div className="absolute z-8 flex-1 bg-white/30 backdrop-blur-md min-w-[346px] h-16 rounded-t-2xl"></div>
-                        <img src="./yt.png" alt="icon" className="w-12 h-12 absolute z-5 mb-10 ml-5 rounded-xl bg-white" />
+                        <img src={imagePath} alt="Thumbnail" className="w-full object-cover h-48 rounded-t-2xl" />
+                        <div className="absolute z-8 flex-1 bg-white/30 backdrop-blur-md min-w-[346px] h-14 rounded-t-2xl"></div>
+                        <img src="./yt.png" alt="icon" className="w-12 h-12 absolute z-5 mb-8 ml-5 rounded-xl bg-white" />
                         <div className="flex-1 absolute z-9 font-bold text-lg text-white justify-center pl-16 pb-4 truncate w-[320px] text-start">{title}</div>
                     </div>
                     <div className="p-4 bg-black rounded-b-2xl space-y-4">
@@ -154,7 +156,6 @@ export function Card({
                 <button
                     className="bg-black/25 w-fit p-3 border border-slate-700 font-bold text-white rounded-lg"
                     onClick={handleCardDownload}
-                    disabled={isLoading}
                 >
                     <Download />
                 </button>

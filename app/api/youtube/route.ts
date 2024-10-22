@@ -1,20 +1,30 @@
 import axios from "axios";
 import * as cheerio from 'cheerio';
 import { NextRequest, NextResponse } from "next/server";
-import fs from 'fs';
-import path from 'path';
-
 const downloadImage = async (url: string, fileName: string) => {
     try {
         const response = await axios.get(url, { responseType: 'arraybuffer' });
-        const filePath = path.join(process.cwd(), 'public/uploads', fileName);
-        fs.writeFileSync(filePath, response.data);
-        return `/public/uploads/${fileName}`;
+        const imageBuffer = response.data;
+        const imageBlob = new Blob([imageBuffer], { type: 'image/jpeg' });
+        const api_key = process.env.NEXT_PUBLIC_API_KEY as string;
+        const upload_preset = process.env.NEXT_PUBLIC_UPLOAD_PRESET as string;
+        const formData = new FormData();
+        formData.append('file', imageBlob, fileName);
+        formData.append('upload_preset', upload_preset);
+        formData.append('public_id', fileName);
+        formData.append('api_key', api_key);
+        const uploadResponse = await axios.post(
+            'https://api.cloudinary.com/v1_1/linktopost/image/upload',
+            formData
+        );
+        const uploadedImageUrl = uploadResponse.data.url;
+        return uploadedImageUrl;
     } catch (error) {
-        console.error('Error downloading image:', error);
+        console.error('Error downloading or uploading image:', error);
         return null;
     }
 };
+
 
 const fetchYTProfile = async (userId: string) => {
     try {

@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Card } from "./Card";
 import axios from "axios";
 import { Loader } from "./Loader";
@@ -26,17 +26,6 @@ export function HomePage() {
         userId:"",
         imagePath:""
     })
-
-    useEffect(()=>{
-        const deleteImages = async() => {
-            try {
-                axios.post('/api/clearimages')
-            } catch (error) {
-                console.error(error)
-            }
-        }
-        deleteImages()
-    },[])
 
     const handleButtonClick = async() =>{
         setIsLoading(true)
