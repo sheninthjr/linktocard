@@ -1,4 +1,3 @@
-import { NEXT_PUBLIC_API_KEY, NEXT_PUBLIC_UPLOAD_PRESET } from "@/config";
 import axios from "axios";
 import * as cheerio from 'cheerio';
 import { NextRequest, NextResponse } from "next/server";
@@ -7,11 +6,13 @@ const downloadImage = async (url: string, fileName: string) => {
         const response = await axios.get(url, { responseType: 'arraybuffer' });
         const imageBuffer = response.data;
         const imageBlob = new Blob([imageBuffer], { type: 'image/jpeg' });
+        const api_key = process.env.NEXT_PUBLIC_API_KEY as string;
+        const upload_preset = process.env.NEXT_PUBLIC_UPLOAD_PRESET as string;
         const formData = new FormData();
         formData.append('file', imageBlob, fileName);
-        formData.append('upload_preset', NEXT_PUBLIC_UPLOAD_PRESET);
+        formData.append('upload_preset', upload_preset);
         formData.append('public_id', fileName);
-        formData.append('api_key', NEXT_PUBLIC_API_KEY);
+        formData.append('api_key', api_key);
         const uploadResponse = await axios.post(
             'https://api.cloudinary.com/v1_1/linktopost/image/upload',
             formData

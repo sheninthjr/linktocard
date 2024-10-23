@@ -4,7 +4,6 @@ import axios from 'axios';
 import { ChartLine, Download, HandHeart, Link } from "lucide-react";
 import { Response } from './HomePage';
 import { useEffect, useState } from 'react';
-import { NEXT_PUBLIC_API_KEY, NEXT_PUBLIC_UPLOAD_PRESET } from '@/config';
 
 export function Card({
     title,
@@ -63,10 +62,12 @@ export function Card({
             return null;
         }
         const formData = new FormData();
+        const api_key = process.env.NEXT_PUBLIC_API_KEY as string;
+        const upload_preset = process.env.NEXT_PUBLIC_UPLOAD_PRESET as string;
         formData.append('file', imageBlob);
-        formData.append('upload_preset', NEXT_PUBLIC_UPLOAD_PRESET);
+        formData.append('upload_preset', upload_preset);
         formData.append('public_id', publicId);
-        formData.append('api_key', NEXT_PUBLIC_API_KEY);
+        formData.append('api_key', api_key);
         try {
             const uploadResponse = await axios.post(
                 'https://api.cloudinary.com/v1_1/linktopost/image/upload',
