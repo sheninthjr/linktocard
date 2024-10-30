@@ -8,3 +8,9 @@ LinkToPost is a convenient post generator that allows users to convert their You
 * Social media sharing
 * High-resolution downloads
 
+## Integration
+
+* Youtube
+* LinkedIn
+* Instagram
+* Github
