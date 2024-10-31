@@ -12,6 +12,7 @@ export interface Response {
   imagePath: string;
   userName: string;
   userId: string;
+  views: string;
 }
 export function HomePage() {
   const [url, setUrl] = useState("");
@@ -25,6 +26,7 @@ export function HomePage() {
     userName: "",
     userId: "",
     imagePath: "",
+    views: ""
   });
 
   const handleButtonClick = async () => {
@@ -38,6 +40,7 @@ export function HomePage() {
       userName: response.data.userName,
       userId: response.data.userId,
       imagePath: response.data.imagePath,
+      views: response.data.views
     });
     setIsLoading(false);
     setButtonClicked(true);
@@ -45,10 +48,6 @@ export function HomePage() {
   return (
     <div className="xl:w-[80%] md:pr-10 lg:pl-10  md:pl-16 lg:pr-10 flex mx-auto flex-col w-full lg:flex-row justify-center items-center rounded-2xl shadow-lg overflow-hidden space-y-10 md:space-y-0 pb-10 md:pb-0">
       <div className="lg:w-1/2 w-full pt-24 flex md:p-8 flex-col justify-center space-y-16 h-fit items-center rounded-l-xl">
-        <h1 className="text-white text-7xl font-extrabold font-serif">
-          <span className="text-7xl">L</span>inkTo
-          <span className="text-7xl">P</span>ost
-        </h1>
         <h1 className="text-white text-5xl font-extrabold text-start font-montserrat leading-tight mb-6 p-4">
           Instantly Turn Your Link into a Stunning Visual Post. Just Paste &
           Click!
@@ -80,6 +79,7 @@ export function HomePage() {
               userName={metadata.userName}
               userId={metadata.userId}
               imagePath={metadata.imagePath}
+              views={metadata.views}
             />
           )
         )}

@@ -18,8 +18,8 @@ export function Navbar() {
             setIsActiveId('home');
         } else if (pathname === '/dashboard') {
             setIsActiveId('dashboard');
-        } else if (pathname === '/contact') {
-            setIsActiveId('contact');
+        } else if (pathname === '/youtube') {
+            setIsActiveId('youtube');
         }
     }, [pathname]);
     const toggleSidebar = () => {

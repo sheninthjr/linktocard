@@ -12,7 +12,8 @@ export function Card({
     profile,
     userName,
     userId,
-    imagePath
+    imagePath,
+    views
 }: Response) {
     const [shareUrl, setShareUrl] = useState('');
     const [isLoading,setIsLoading] = useState(false);
@@ -84,6 +85,14 @@ export function Card({
         }
     }
 
+    const formatViews = (views:number) => {
+        if (views >= 1000) {
+          return `${(views / 1000).toFixed(1)}k`;
+        }
+        return views.toString();
+      };
+      
+
     useEffect(() => {
         handleShareUpload();
     },[])
@@ -120,7 +129,7 @@ export function Card({
                                     <HandHeart className="w-6 h-6 self-center" />Like
                                 </div>
                                 <div className='flex gap-1 self-center font-semibold text-blue-500'>
-                                    <ChartLine className="w-4 h-4 font-semibold self-center" />Views
+                                    <ChartLine className="w-4 h-4 font-semibold self-center" />{formatViews(Number(views))}
                                 </div>
                             </div>
                         </div>
