@@ -1,5 +1,5 @@
 'use client'
-import { ContactRoundIcon, Home, LayoutDashboard, LogIn } from "lucide-react";
+import { GithubIcon, Home, LayoutDashboard, Linkedin, LogIn, Twitter, Youtube } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -17,8 +17,14 @@ export function Sidebar() {
             setIsActiveId('home');
         } else if (pathname === '/dashboard') {
             setIsActiveId('dashboard');
-        } else if (pathname === '/contact') {
-            setIsActiveId('contact');
+        } else if (pathname === '/youtube') {
+            setIsActiveId('youtube');
+        } else if (pathname === '/linkedin') {
+            setIsActiveId('linkedin');
+        } else if (pathname === '/github') {
+            setIsActiveId('github');
+        } else if (pathname === '/twitter') {
+            setIsActiveId('twitter');
         }
     }, [pathname]);
 
@@ -49,14 +55,44 @@ export function Sidebar() {
                                 <LayoutDashboard />
                             </div>
                         </Link>
-                        <Link href="/contact" onClick={() => handleClickLink('contact')}>
+                        <Link href="/youtube" onClick={() => handleClickLink('youtube')}>
                             <div
-                                id="contact"
+                                id="youtube"
                                 className={`p-2 rounded-full cursor-pointer ${
-                                    isActiveId === 'contact' ? 'bg-blue-500' : 'bg-transparent'
+                                    isActiveId === 'youtube' ? 'bg-blue-500' : 'bg-transparent'
                                 }`}
                             >
-                                <ContactRoundIcon />
+                                <Youtube />
+                            </div>
+                        </Link>
+                        <Link href="/linkedin" onClick={() => handleClickLink('linkedin')}>
+                            <div
+                                id="linkedin"
+                                className={`p-2 rounded-full cursor-pointer ${
+                                    isActiveId === 'linkedin' ? 'bg-blue-500' : 'bg-transparent'
+                                }`}
+                            >
+                                <Linkedin />
+                            </div>
+                        </Link>
+                        <Link href="/github" onClick={() => handleClickLink('github')}>
+                            <div
+                                id="github"
+                                className={`p-2 rounded-full cursor-pointer ${
+                                    isActiveId === 'github' ? 'bg-blue-500' : 'bg-transparent'
+                                }`}
+                            >
+                                <GithubIcon />
+                            </div>
+                        </Link>
+                        <Link href="/twitter" onClick={() => handleClickLink('twitter')}>
+                            <div
+                                id="twitter"
+                                className={`p-2 rounded-full cursor-pointer ${
+                                    isActiveId === 'twitter' ? 'bg-blue-500' : 'bg-transparent'
+                                }`}
+                            >
+                                <Twitter/>
                             </div>
                         </Link>
                     </div>
