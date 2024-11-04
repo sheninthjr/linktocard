@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import { Navbar } from "@/components/Navbar";
+import type { Metadata } from 'next';
+import './globals.css';
+import { Navbar } from '@/components/Navbar';
 
 export const metadata: Metadata = {
-  title: "LinkToPost",
-  description: "Created by sheninthjr",
+  title: 'LinkToPost',
+  description: 'Created by sheninthjr',
 };
 
 export default function RootLayout({
@@ -14,9 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`antialiased`}
-      >
+      <body className={`antialiased`}>
         <Navbar />
         {children}
       </body>

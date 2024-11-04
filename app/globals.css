@@ -5,20 +5,21 @@
 @tailwind utilities;
 
 @layer base {
-    body {
-        @apply bg-gradient-to-l from-slate-900 via-gray-950 to-slate-900;
-    }
+  body {
+    @apply bg-gradient-to-l from-slate-900 via-gray-950 to-slate-900;
+  }
 }
 
 .custom-pulse {
-    animation: pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
-    opacity: .5;
+    opacity: 0.5;
   }
 }

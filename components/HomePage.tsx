@@ -1,8 +1,8 @@
-"use client";
-import { useState } from "react";
-import { Card } from "./Card";
-import axios from "axios";
-import { Loader } from "./Loader";
+'use client';
+import { useState } from 'react';
+import { Card } from './Card';
+import axios from 'axios';
+import { Loader } from './Loader';
 
 export interface Response {
   title: string;
@@ -14,25 +14,25 @@ export interface Response {
   userId: string;
   views: string;
 }
-export function HomePage({title}: {title: string}) {
-  const [url, setUrl] = useState("");
+export function HomePage({ title }: { title: string }) {
+  const [url, setUrl] = useState('');
   const [buttonClicked, setButtonClicked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [metadata, setMetaData] = useState({
-    title: "",
-    description: "",
-    url: "",
-    profile: "",
-    userName: "",
-    userId: "",
-    imagePath: "",
-    views: ""
+    title: '',
+    description: '',
+    url: '',
+    profile: '',
+    userName: '',
+    userId: '',
+    imagePath: '',
+    views: '',
   });
 
   const handleButtonClick = async () => {
     setIsLoading(true);
-    if(title === 'youtube') {
-      const response = await axios.post("api/youtube", { url });
+    if (title === 'youtube') {
+      const response = await axios.post('api/youtube', { url });
       setMetaData({
         title: response.data.title,
         description: response.data.description,
@@ -41,7 +41,7 @@ export function HomePage({title}: {title: string}) {
         userName: response.data.userName,
         userId: response.data.userId,
         imagePath: response.data.imagePath,
-        views: response.data.views
+        views: response.data.views,
       });
     }
     setIsLoading(false);
