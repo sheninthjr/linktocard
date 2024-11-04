@@ -1,5 +1,7 @@
+import { HomePage } from "@/components/HomePage";
+
 export default function Youtube() {
     return(
-        <div>Youtube</div>
+        <HomePage title="youtube" />
     )
 }

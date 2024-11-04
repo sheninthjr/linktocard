@@ -14,7 +14,7 @@ export interface Response {
   userId: string;
   views: string;
 }
-export function HomePage() {
+export function HomePage({title}: {title: string}) {
   const [url, setUrl] = useState("");
   const [buttonClicked, setButtonClicked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,17 +31,19 @@ export function HomePage() {
 
   const handleButtonClick = async () => {
     setIsLoading(true);
-    const response = await axios.post("api/youtube", { url });
-    setMetaData({
-      title: response.data.title,
-      description: response.data.description,
-      profile: response.data.profile,
-      url: url,
-      userName: response.data.userName,
-      userId: response.data.userId,
-      imagePath: response.data.imagePath,
-      views: response.data.views
-    });
+    if(title === 'youtube') {
+      const response = await axios.post("api/youtube", { url });
+      setMetaData({
+        title: response.data.title,
+        description: response.data.description,
+        profile: response.data.profile,
+        url: url,
+        userName: response.data.userName,
+        userId: response.data.userId,
+        imagePath: response.data.imagePath,
+        views: response.data.views
+      });
+    }
     setIsLoading(false);
     setButtonClicked(true);
   };
