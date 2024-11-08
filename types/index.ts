@@ -17,3 +17,12 @@ export interface LinkedInResponse {
   authorImageUrl: string;
   imageUrl: string;
 }
+
+export interface GithubResponse {
+  title: string;
+  description: string;
+  image: string;
+  userName: string;
+  prStatus: string;
+  avatar: string;
+}

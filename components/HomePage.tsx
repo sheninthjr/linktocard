@@ -3,8 +3,9 @@ import { useState } from 'react';
 import { YoutubeCard } from './YoutubeCard';
 import axios from 'axios';
 import { Loader } from './Loader';
-import { LinkedInResponse } from '@/types';
+import { GithubResponse, LinkedInResponse } from '@/types';
 import { LinkedInCard } from './LinkedInCard';
+import { GithubCard } from './GithubCard';
 
 export function HomePage({ title }: { title: string }) {
   const [url, setUrl] = useState('');
@@ -27,6 +28,14 @@ export function HomePage({ title }: { title: string }) {
     description: '',
     authorImageUrl: '',
     imageUrl: '',
+  });
+  const [githubMetadata, setGithubMetadata] = useState<GithubResponse>({
+    title: '',
+    description: '',
+    userName: '',
+    avatar: '',
+    image: '',
+    prStatus: '',
   });
 
   const handleButtonClick = async () => {
@@ -53,6 +62,16 @@ export function HomePage({ title }: { title: string }) {
         authorImageUrl: response.data.authorImageUrl,
         imageUrl: response.data.imageUrl,
       });
+    } else if (title === 'github') {
+      const response = await axios.post('api/github', { url });
+      setGithubMetadata({
+        title: response.data.title,
+        description: response.data.description,
+        userName: response.data.userName,
+        avatar: response.data.avatar,
+        image: response.data.image,
+        prStatus: response.data.prStatus,
+      });
     }
     setIsLoading(false);
     setButtonClicked(true);
@@ -70,6 +89,11 @@ export function HomePage({ title }: { title: string }) {
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder="Paste your URL here"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleButtonClick();
+            }
+          }}
         />
         <button
           className="text-white font-semibold py-3 px-6 rounded-full transition duration-300 bg-black/60 border border-slate-700"
@@ -104,6 +128,16 @@ export function HomePage({ title }: { title: string }) {
                   description={linkedInMetadata.description}
                   authorImageUrl={linkedInMetadata.authorImageUrl}
                   imageUrl={linkedInMetadata.imageUrl}
+                />
+              )}
+              {title === 'github' && (
+                <GithubCard
+                  title={githubMetadata.title}
+                  description={githubMetadata.description}
+                  userName={githubMetadata.userName}
+                  avatar={githubMetadata.avatar}
+                  image={githubMetadata.image}
+                  prStatus={githubMetadata.prStatus}
                 />
               )}
             </>
