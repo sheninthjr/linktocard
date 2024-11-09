@@ -13,6 +13,7 @@
   "dependencies": {
     "@cloudinary/react": "^1.13.0",
     "@cloudinary/url-gen": "^1.21.0",
+    "@the-convocation/twitter-scraper": "^0.14.1",
     "@types/cheerio": "^0.22.35",
     "axios": "^1.7.7",
     "cheerio": "^1.0.0",
@@ -30,6 +31,8 @@
     "lucide-react": "^0.453.0",
     "next": "14.2.15",
     "node-fetch": "^2.7.0",
+    "prisma": "^5.22.0",
+    "puppeteer": "^23.7.1",
     "react": "^18",
     "react-dom": "^18",
     "react-share": "^5.1.0",

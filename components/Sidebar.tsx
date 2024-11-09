@@ -2,11 +2,10 @@
 import {
   GithubIcon,
   Home,
+  Instagram,
   LayoutDashboard,
   Linkedin,
   LogIn,
-  Twitter,
-  Youtube,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -25,14 +24,12 @@ export function Sidebar() {
       setIsActiveId('home');
     } else if (pathname === '/dashboard') {
       setIsActiveId('dashboard');
-    } else if (pathname === '/youtube') {
-      setIsActiveId('youtube');
     } else if (pathname === '/linkedin') {
       setIsActiveId('linkedin');
     } else if (pathname === '/github') {
       setIsActiveId('github');
-    } else if (pathname === '/twitter') {
-      setIsActiveId('twitter');
+    } else if (pathname === '/instagram') {
+      setIsActiveId('instagram');
     }
   }, [pathname]);
 
@@ -69,16 +66,6 @@ export function Sidebar() {
                 <LayoutDashboard />
               </div>
             </Link>
-            <Link href="/youtube" onClick={() => handleClickLink('youtube')}>
-              <div
-                id="youtube"
-                className={`p-2 rounded-full cursor-pointer ${
-                  isActiveId === 'youtube' ? 'bg-blue-500' : 'bg-transparent'
-                }`}
-              >
-                <Youtube />
-              </div>
-            </Link>
             <Link href="/linkedin" onClick={() => handleClickLink('linkedin')}>
               <div
                 id="linkedin"
@@ -99,14 +86,17 @@ export function Sidebar() {
                 <GithubIcon />
               </div>
             </Link>
-            <Link href="/twitter" onClick={() => handleClickLink('twitter')}>
+            <Link
+              href="/instagram"
+              onClick={() => handleClickLink('instagram')}
+            >
               <div
-                id="twitter"
+                id="instagram"
                 className={`p-2 rounded-full cursor-pointer ${
-                  isActiveId === 'twitter' ? 'bg-blue-500' : 'bg-transparent'
+                  isActiveId === 'instagram' ? 'bg-blue-500' : 'bg-transparent'
                 }`}
               >
-                <Twitter />
+                <Instagram />
               </div>
             </Link>
           </div>

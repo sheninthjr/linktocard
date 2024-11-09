@@ -20,6 +20,7 @@ export async function POST(req: NextRequest) {
     const jsonData = JSON.parse(jsonLdScript!);
     const authorName = jsonData.author?.name;
     const authorBio = $('p.comment__author-headline').text().trim();
+    const followers = $('p.public-post-author-card__followers').text().trim();
     const authorImageUrl = jsonData.author?.image?.url || '';
     const description = jsonData.articleBody;
     const imageUrl =
@@ -30,6 +31,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       authorName,
       authorBio,
+      followers,
       description,
       authorImageUrl,
       imageUrl,

@@ -1,19 +1,11 @@
 'use client';
 import { useState } from 'react';
-import { Card } from './Card';
+import { YoutubeCard } from './YoutubeCard';
 import axios from 'axios';
 import { Loader } from './Loader';
+import { LinkedInResponse } from '@/types';
+import { LinkedInCard } from './LinkedInCard';
 
-export interface Response {
-  title: string;
-  description: string;
-  profile: string;
-  url: string;
-  imagePath: string;
-  userName: string;
-  userId: string;
-  views: string;
-}
 export function HomePage({ title }: { title: string }) {
   const [url, setUrl] = useState('');
   const [buttonClicked, setButtonClicked] = useState(false);
@@ -27,6 +19,14 @@ export function HomePage({ title }: { title: string }) {
     userId: '',
     imagePath: '',
     views: '',
+  });
+  const [linkedInMetadata, setLinkedInMetadata] = useState<LinkedInResponse>({
+    authorName: '',
+    authorBio: '',
+    followers: '',
+    description: '',
+    authorImageUrl: '',
+    imageUrl: '',
   });
 
   const handleButtonClick = async () => {
@@ -42,6 +42,16 @@ export function HomePage({ title }: { title: string }) {
         userId: response.data.userId,
         imagePath: response.data.imagePath,
         views: response.data.views,
+      });
+    } else if (title === 'linkedin') {
+      const response = await axios.post('api/linkedin', { url });
+      setLinkedInMetadata({
+        authorName: response.data.authorName,
+        authorBio: response.data.authorBio,
+        followers: response.data.followers,
+        description: response.data.description,
+        authorImageUrl: response.data.authorImageUrl,
+        imageUrl: response.data.imageUrl,
       });
     }
     setIsLoading(false);
@@ -73,16 +83,30 @@ export function HomePage({ title }: { title: string }) {
           <Loader />
         ) : (
           buttonClicked && (
-            <Card
-              title={metadata.title}
-              description={metadata.description}
-              url={metadata.url}
-              profile={metadata.profile}
-              userName={metadata.userName}
-              userId={metadata.userId}
-              imagePath={metadata.imagePath}
-              views={metadata.views}
-            />
+            <>
+              {title === 'youtube' && (
+                <YoutubeCard
+                  title={metadata.title}
+                  description={metadata.description}
+                  url={metadata.url}
+                  profile={metadata.profile}
+                  userName={metadata.userName}
+                  userId={metadata.userId}
+                  imagePath={metadata.imagePath}
+                  views={metadata.views}
+                />
+              )}
+              {title === 'linkedin' && (
+                <LinkedInCard
+                  authorName={linkedInMetadata.authorName}
+                  authorBio={linkedInMetadata.authorBio}
+                  followers={linkedInMetadata.followers}
+                  description={linkedInMetadata.description}
+                  authorImageUrl={linkedInMetadata.authorImageUrl}
+                  imageUrl={linkedInMetadata.imageUrl}
+                />
+              )}
+            </>
           )
         )}
       </div>

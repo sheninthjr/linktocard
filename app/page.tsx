@@ -34,12 +34,12 @@ const containerVariant = {
 
 export default function Landing() {
   const router = useRouter();
-  const title = 'LinkToPost';
+  const title = 'LINKTOPOST';
 
   return (
     <div className="flex flex-col justify-center overflow-hidden items-center h-screen text-white">
       <motion.div
-        className="font-extrabold mb-4 font-serif flex items-end"
+        className="font-extrabold mb-4 font-montserrat flex items-end"
         variants={containerVariant}
         initial="hidden"
         animate="visible"
@@ -48,11 +48,7 @@ export default function Landing() {
           <motion.span
             key={index}
             variants={characterVariant}
-            className={
-              char === 'L' || char === 'P'
-                ? 'text-8xl'
-                : 'text-5xl md:text-6xl pb-2'
-            }
+            className="font-extrabold text-8xl"
           >
             {char}
           </motion.span>
@@ -74,7 +70,7 @@ export default function Landing() {
       </button>
 
       <motion.div
-        className="flex space-x-6 mt-12"
+        className="flex space-x-10 mt-12"
         variants={containerVariant}
         initial="hidden"
         animate="visible"
@@ -90,7 +86,7 @@ export default function Landing() {
           <img
             src="/twitter.png"
             alt="Twitter"
-            className="w-10 bg-white rounded-lg border h-10"
+            className="w-20 bg-white rounded-lg border h-20"
           />
         </motion.a>
 
@@ -102,7 +98,17 @@ export default function Landing() {
           whileHover={{ scale: 1.5, rotate: 10 }}
           whileTap={{ scale: 0.9 }}
         >
-          <img src="/insta.webp" alt="Instagram" className="w-10 h-10" />
+          <img src="/insta.webp" alt="Instagram" className="w-20 h-20" />
+        </motion.a>
+        <motion.a
+          href="https://youtube.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          variants={iconVariant(0, 500)}
+          whileHover={{ scale: 1.5, rotate: 10 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <img src="/yt.png" alt="YouTube" className="w-24 h-24" />
         </motion.a>
 
         <motion.a
@@ -116,7 +122,7 @@ export default function Landing() {
           <img
             src="/linkedin.png"
             alt="LinkedIn"
-            className="w-11 rounded-full h-11"
+            className="w-20 rounded-full h-20"
           />
         </motion.a>
 
@@ -128,18 +134,7 @@ export default function Landing() {
           whileHover={{ scale: 1.5, rotate: 10 }}
           whileTap={{ scale: 0.9 }}
         >
-          <img src="/face.png" alt="Facebook" className="w-10 h-10" />
-        </motion.a>
-
-        <motion.a
-          href="https://youtube.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          variants={iconVariant(0, 500)}
-          whileHover={{ scale: 1.5, rotate: 10 }}
-          whileTap={{ scale: 0.9 }}
-        >
-          <img src="/yt.png" alt="YouTube" className="w-12 h-12" />
+          <img src="/face.png" alt="Facebook" className="w-20 h-20" />
         </motion.a>
       </motion.div>
     </div>

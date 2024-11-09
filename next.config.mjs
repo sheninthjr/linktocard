@@ -3,6 +3,7 @@ const nextConfig = {
   images: {
     domains: ['ideogram.ai', 'www.google.com'],
   },
+  reactStrictMode: false,
 };
 
 export default nextConfig;
