@@ -14,3 +14,7 @@ LinkToPost is a convenient post generator that allows users to convert their You
 - LinkedIn
 - Instagram
 - Github
+
+## License
+
+[MIT License](LICENSE)
