@@ -46,8 +46,8 @@ export function Sidebar() {
             <Link href="/home" onClick={() => handleClickLink('home')}>
               <div
                 id="home"
-                className={`p-2 rounded-full cursor-pointer ${
-                  isActiveId === 'home' ? 'bg-blue-500' : 'bg-transparent'
+                className={`p-3 rounded-full cursor-pointer ${
+                  isActiveId === 'home' ? 'bg-slate-950' : 'bg-transparent'
                 }`}
               >
                 <Home />
@@ -59,8 +59,8 @@ export function Sidebar() {
             >
               <div
                 id="dashboard"
-                className={`p-2 rounded-full cursor-pointer ${
-                  isActiveId === 'dashboard' ? 'bg-blue-500' : 'bg-transparent'
+                className={`p-3 rounded-full cursor-pointer ${
+                  isActiveId === 'dashboard' ? 'bg-slate-950' : 'bg-transparent'
                 }`}
               >
                 <LayoutDashboard />
@@ -69,8 +69,8 @@ export function Sidebar() {
             <Link href="/linkedin" onClick={() => handleClickLink('linkedin')}>
               <div
                 id="linkedin"
-                className={`p-2 rounded-full cursor-pointer ${
-                  isActiveId === 'linkedin' ? 'bg-blue-500' : 'bg-transparent'
+                className={`p-3 rounded-full cursor-pointer ${
+                  isActiveId === 'linkedin' ? 'bg-slate-950' : 'bg-transparent'
                 }`}
               >
                 <Linkedin />
@@ -79,8 +79,8 @@ export function Sidebar() {
             <Link href="/github" onClick={() => handleClickLink('github')}>
               <div
                 id="github"
-                className={`p-2 rounded-full cursor-pointer ${
-                  isActiveId === 'github' ? 'bg-blue-500' : 'bg-transparent'
+                className={`p-3 rounded-full cursor-pointer ${
+                  isActiveId === 'github' ? 'bg-slate-950' : 'bg-transparent'
                 }`}
               >
                 <GithubIcon />
@@ -92,8 +92,8 @@ export function Sidebar() {
             >
               <div
                 id="instagram"
-                className={`p-2 rounded-full cursor-pointer ${
-                  isActiveId === 'instagram' ? 'bg-blue-500' : 'bg-transparent'
+                className={`p-3 rounded-full cursor-pointer ${
+                  isActiveId === 'instagram' ? 'bg-slate-950' : 'bg-transparent'
                 }`}
               >
                 <Instagram />

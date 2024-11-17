@@ -3,10 +3,12 @@ import { motion } from 'framer-motion';
 import AnimatedLogoCloud from '@/components/ImageSlider';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import { Stars } from '@/components/Stars';
 
 export default function Landing() {
   return (
     <div className="flex justify-center items-center h-screen">
+      <Stars />
       <section className="flex relative flex-col gap-5 justify-center items-center max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-3xl">
         <motion.h1
           initial={{ opacity: 0, scale: 1.1 }}

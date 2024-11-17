@@ -6,10 +6,13 @@ import { Loader } from './Loader';
 import { GithubResponse, LinkedInResponse } from '@/types';
 import { LinkedInCard } from './LinkedInCard';
 import { GithubCard } from './GithubCard';
+import { TitleCard } from './dynamicCard/TitleCard';
+import { LineFalling } from './LineFalling';
 
 export function HomePage({ title }: { title: string }) {
   const [url, setUrl] = useState('');
   const [buttonClicked, setButtonClicked] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
   const [metadata, setMetaData] = useState({
     title: '',
@@ -77,17 +80,27 @@ export function HomePage({ title }: { title: string }) {
     setButtonClicked(true);
   };
   return (
-    <div className="xl:w-[80%] md:pr-10 lg:pl-10  md:pl-16 lg:pr-10 flex mx-auto flex-col w-full lg:flex-row justify-center items-center rounded-2xl shadow-lg overflow-hidden space-y-10 md:space-y-0 pb-10 md:pb-0">
+    <div className="xl:w-[90%] md:pr-10 lg:pl-10  md:pl-16 lg:pr-10 flex mx-auto flex-col w-full lg:flex-row justify-center pt-32 rounded-2xl shadow-lg overflow-hidden space-y-10 md:space-y-0 pb-10 md:pb-0">
       <div className="lg:w-1/2 w-full pt-24 flex md:p-8 flex-col justify-center space-y-16 h-fit items-center rounded-l-xl">
-        <h1 className="text-white text-5xl font-extrabold text-start font-montserrat leading-tight mb-6 p-4">
-          Instantly Turn Your Link into a Stunning Visual Post. Just Paste &
-          Click!
-        </h1>
+        <div className="self-start flex flex-col space-y-4">
+          <TitleCard />
+        </div>
+        <div className="self-start flex flex-col space-y-3">
+          <div className="font-extrabold text-7xl self-start font-montserrat">
+            Just Paste & Click!
+          </div>
+          <h1 className="text-white text-2xl text-start self-start font-thin leading-tight">
+            Make your link look great. Just turn it into a post!
+          </h1>
+        </div>
         <input
           type="text"
-          className="p-4 bg-gray-800 border border-slate-600 text-white text-lg outline-none w-[80%] rounded-lg"
+          className="p-4 border border-slate-500 text-white text-lg self-start outline-none w-[80%] rounded-lg"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
+          style={{
+            background: 'rgba(255, 255, 255, 0.1)',
+          }}
           placeholder="Paste your URL here"
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
@@ -96,13 +109,14 @@ export function HomePage({ title }: { title: string }) {
           }}
         />
         <button
-          className="text-white font-semibold py-3 px-6 rounded-full transition duration-300 bg-black/60 border border-slate-700"
+          className="text-black text-lg mr-48 font-semibold py-2 px-6 rounded-2xl transition duration-300 bg-white border border-slate-700"
           onClick={handleButtonClick}
         >
           Generate
         </button>
       </div>
-      <div className="flex justify-center items-center self-center rounded-r-2xl h-screen md:pl-20 lg:pl-0 xl:pl-0 w-full md:w-1/2 p-8">
+      <LineFalling />
+      <div className="flex justify-center self-center rounded-r-2xl h-screen md:pl-20 lg:pl-0 xl:pl-0 w-full md:w-1/2 p-8">
         {isLoading ? (
           <Loader />
         ) : (

@@ -18,7 +18,7 @@ const downloadImage = async (url: string, fileName: string) => {
       'https://api.cloudinary.com/v1_1/linktopost/image/upload',
       formData,
     );
-    const uploadedImageUrl = uploadResponse.data.url;
+    const uploadedImageUrl = uploadResponse.data.secure_url;
     return uploadedImageUrl;
   } catch (error) {
     console.error('Error downloading or uploading image:', error);

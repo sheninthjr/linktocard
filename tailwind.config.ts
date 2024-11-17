@@ -15,6 +15,7 @@ const config: Config = {
       fontFamily: {
         montserrat: ['"Montserrat"', 'sans-serif'],
         notosans: ['"Noto Sans"', 'sans-serif'],
+        roboto: ['Roboto', 'sans-serif'],
       },
     },
   },

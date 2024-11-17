@@ -1,14 +1,7 @@
 'use client';
 import html2canvas from 'html2canvas-pro';
 import axios from 'axios';
-import {
-  ChartLine,
-  CircleCheck,
-  Copy,
-  Download,
-  HandHeart,
-  Link,
-} from 'lucide-react';
+import { ChartLine, Copy, Download, HandHeart, Link } from 'lucide-react';
 import { YoutubeResponse } from '../types';
 import { useEffect, useState } from 'react';
 
@@ -133,7 +126,7 @@ export function YoutubeCard({
                 alt="Thumbnail"
                 className="w-full object-cover h-48 rounded-t-2xl"
               />
-              <div className="absolute z-8 flex-1 bg-white/80 backdrop-blur-md min-w-[346px] h-14 rounded-t-2xl"></div>
+              <div className="absolute z-8 flex-1 bg-white/50 backdrop-blur-md min-w-[346px] h-14 rounded-t-2xl"></div>
               <img
                 src="./yt.png"
                 alt="icon"
@@ -236,15 +229,11 @@ export function YoutubeCard({
       <div className="ml-2 mt-4 flex items-center">
         <button
           onClick={() => copyToClipboard(shareUrl)}
-          className="flex items-center gap-2 self-center"
+          className={`flex items-center gap-2 self-center ${isLoading ? 'pointer-events-none opacity-50' : ''}`}
         >
-          {onClickCopy ? (
-            <CircleCheck className="text-green-500" />
-          ) : (
-            <Copy className="text-white" />
-          )}
+          <Copy className="text-white" />
           <span className="text-white font-mono text-xl font-semibold">
-            Copy Link
+            {onClickCopy ? 'Copied' : 'Copy Link'}
           </span>
         </button>
       </div>

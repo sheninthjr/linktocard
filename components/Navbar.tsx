@@ -10,8 +10,12 @@ import {
 } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+import LiveUser from './LiveUser/LiveUser';
 
 export function Navbar() {
+  const { data: session } = useSession();
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
   const [isActiveId, setIsActiveId] = useState('');
   const pathname = usePathname();
@@ -35,6 +39,20 @@ export function Navbar() {
 
   return (
     <div>
+      <div className="absolute top-0 right-0 p-6 flex gap-2 items-center">
+        {session?.user && (
+          <div className="bg-neutral-800 self-center rounded-full p-1.5 w-fit">
+            <Image
+              src={session?.user?.image || ''}
+              alt="User Image"
+              width={40}
+              height={40}
+              className="rounded-full"
+            />
+          </div>
+        )}
+        <LiveUser />
+      </div>
       <div
         className="flex text-white inset-3 h-12 rounded-xl z-10 mt-3 backdrop-blur-lg w-[94%] md:w-fit justify-between items-center p-3 fixed"
         style={{
