@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
       authorImageUrl,
       imageUrl,
     });
-  } catch (e: any) {
+  } catch (e) {
     console.log(e);
     NextResponse.json({ message: 'Error while extracting' });
   }

@@ -1,9 +1,7 @@
 'use client';
-import { useSession } from 'next-auth/react';
 import React, { useState } from 'react';
 
 const Dashboard = () => {
-  const { data: session } = useSession();
   const [activeState, setActiveState] = useState('youtube');
 
   const SocialButton = ({

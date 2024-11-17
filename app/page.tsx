@@ -37,7 +37,7 @@ export default function Landing() {
           href="/home"
           className="inline-flex text-lg gap-x-2 mt-2 backdrop-blur-md text-white justify-center items-center py-3 px-5 w-fit rounded-3xl border duration-200 group bg-page-gradient bg-[#1a1e33] border-white/30 text-md font-geistSans hover:border-zinc-600 hover:bg-[#161a30] hover:text-zinc-100"
         >
-          Let's Go
+          Let&apos;s Go
           <div className="flex overflow-hidden relative justify-center items-center ml-1 w-5 h-5">
             <ArrowRight className="absolute transition-all duration-500 group-hover:translate-x-4 group-hover:-translate-y-5" />
             <ArrowRight className="absolute transition-all duration-500 -translate-x-4 -translate-y-5 group-hover:translate-x-0 group-hover:translate-y-0" />

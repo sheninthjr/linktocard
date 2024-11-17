@@ -40,8 +40,8 @@ export async function POST(req: NextRequest) {
       prStatus,
       avatar,
     });
-  } catch (e: any) {
-    console.log(e);
+  } catch (e) {
+    console.error(e);
     NextResponse.json({ message: 'Error while extracting' });
   }
 }

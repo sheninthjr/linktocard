@@ -49,7 +49,7 @@ const AnimatedLogoCloud = () => {
                 key={`animated-logo-cloud-${index}`}
                 className="flex flex-row gap-5 justify-around items-center animate-logo-cloud shrink-0"
               >
-                {logos.map((logo, key) => (
+                {logos.map((logo) => (
                   <>{logo.url}</>
                 ))}
               </div>

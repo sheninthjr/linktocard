@@ -1,14 +1,7 @@
 'use client';
 import html2canvas from 'html2canvas-pro';
 import axios from 'axios';
-import {
-  ChartLine,
-  CircleCheck,
-  Copy,
-  Download,
-  HandHeart,
-  Link,
-} from 'lucide-react';
+import { CircleCheck, Copy, Download } from 'lucide-react';
 import { GithubResponse } from '../types';
 import { useEffect, useState } from 'react';
 
@@ -89,13 +82,6 @@ export function GithubCard({
         return null;
       }
     }
-  };
-
-  const formatViews = (views: number) => {
-    if (views >= 1000) {
-      return `${(views / 1000).toFixed(1)}k`;
-    }
-    return views.toString();
   };
 
   const copyToClipboard = (content: string) => {

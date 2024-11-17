@@ -21,25 +21,15 @@ export async function POST(req: NextRequest) {
     await page.goto(url, { waitUntil: 'networkidle2' });
 
     await page.waitForSelector('._aagw img');
-
-    const imageUrl = await page.evaluate(() => {
-      const imageElement: any = document.querySelector('._aagw img');
-      return imageElement ? imageElement.src : null;
-    });
-
-    console.log('Image URL:', imageUrl);
-
     const $ = cheerio.load(data);
     const title = $('meta[name="twitter:title"]').attr('content');
-    const authorImage = '';
-    const image = '';
     const description = $('meta[name="description"').attr('content');
 
     return NextResponse.json({
       title,
       description,
     });
-  } catch (e: any) {
+  } catch (e) {
     console.log(e);
   }
 }
