@@ -14,7 +14,7 @@ export default function Landing() {
           initial={{ opacity: 0, scale: 1.1 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, ease: 'easeInOut', delay: 0.2 }}
-          className="text-center font-montserrat mx-auto bg-[linear-gradient(180deg,_#FFF_0%,_rgba(255,_255,_255,_0.00)_202.08%)] bg-clip-text text-4xl tracking-tighter sm:text-5xl text-transparent md:text-6xl lg:text-7xl"
+          className="text-center font-montserrat font-bold mx-auto bg-[linear-gradient(180deg,_#FFF_0%,_rgba(255,_255,_255,_0.00)_202.08%)] bg-clip-text text-4xl tracking-tighter sm:text-5xl text-transparent md:text-6xl lg:text-7xl"
         >
           Paste your Link{' '}
           <span className="text-transparent bg-clip-text">then just</span>{' '}
@@ -26,12 +26,14 @@ export default function Landing() {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: 'easeInOut', delay: 0.3 }}
-          className="text-lg text-center text-soft-foreground-text"
+          className="text-center font-thin leading-tight"
         >
-          <strong className="text-xl">LinktoPost</strong> is powerful post
-          generator for various platforms. Simply paste your link and proceed
-          with a single click. Share or download your post, and grab a link to
-          send it to anyone effortlessly.
+          <span className="text-2xl font-extrabold mr-2">LinktoPost</span>{' '}
+          <span className="text-xl">
+            is powerful post generator for various platforms. Simply paste your
+            link and proceed with a single click. Share or download your post,
+            and grab a link to send it to anyone effortlessly.
+          </span>
         </motion.p>
         <Link
           href="/home"
@@ -39,8 +41,7 @@ export default function Landing() {
         >
           Let&apos;s Go
           <div className="flex overflow-hidden relative justify-center items-center ml-1 w-5 h-5">
-            <ArrowRight className="absolute transition-all duration-500 group-hover:translate-x-4 group-hover:-translate-y-5" />
-            <ArrowRight className="absolute transition-all duration-500 -translate-x-4 -translate-y-5 group-hover:translate-x-0 group-hover:translate-y-0" />
+            <ArrowRight className="absolute" />
           </div>
         </Link>
         <AnimatedLogoCloud />

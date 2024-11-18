@@ -5,6 +5,27 @@ import { ChartLine, Copy, Download, HandHeart, Link } from 'lucide-react';
 import { YoutubeResponse } from '../types';
 import { useEffect, useState } from 'react';
 
+const loadImageWithRetry = (
+  imageUrl: string,
+  retries = 3,
+): Promise<string | null> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.src = imageUrl;
+    img.onload = () => resolve(img.src);
+    img.onerror = () => {
+      if (retries > 0) {
+        setTimeout(
+          () => resolve(loadImageWithRetry(imageUrl, retries - 1)),
+          1000,
+        );
+      } else {
+        reject('Image failed to load after multiple retries');
+      }
+    };
+  });
+};
+
 export function YoutubeCard({
   title,
   description,
@@ -18,19 +39,8 @@ export function YoutubeCard({
   const [shareUrl, setShareUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [onClickCopy, setOnClickCopy] = useState(false);
-  const [profileSrc, setProfileSrc] = useState(profile);
-  const [retryCount, setRetryCount] = useState(0);
-
-  const handleProfileImageError = () => {
-    if (retryCount < 3) {
-      setRetryCount(retryCount + 1);
-      setProfileSrc('');
-      setTimeout(() => setProfileSrc(profile), 500);
-    } else {
-      console.error('Failed to load profile image after multiple attempts');
-    }
-  };
-
+  const [hasUploaded, setHasUploaded] = useState(false);
+  const [profileImageLoaded, setProfileImageLoaded] = useState(false);
   const handleCardDownload = async () => {
     const sanitizedTitle = title.replace(/\s+/g, '_').replace(/[^\w\-]+/g, '');
 
@@ -50,51 +60,84 @@ export function YoutubeCard({
       link.click();
     }
   };
+
   const handleShareUpload = async () => {
+    if (hasUploaded) return;
     setIsLoading(true);
     const sanitizedTitle = title.replace(/\s+/g, '_').replace(/[^\w\-]+/g, '');
-
     const publicId = `${userId}_${sanitizedTitle}`;
     const cardElement = document.getElementById('card');
 
-    if (cardElement) {
-      const canvas = await html2canvas(cardElement, {
-        useCORS: true,
-        backgroundColor: '#020617',
-        scale: 6,
-        allowTaint: true,
+    if (cardElement && profileImageLoaded) {
+      const images = cardElement.querySelectorAll('img');
+      const imagePromises = Array.from(images).map((img) => {
+        return new Promise<void>((resolve, reject) => {
+          if (img.complete) {
+            resolve();
+          } else {
+            // @ts-ignore
+            img.onload = resolve;
+            img.onerror = reject;
+          }
+        });
       });
 
-      const imageBlob = await new Promise<Blob | null>((resolve) =>
-        canvas.toBlob(resolve, 'image/png'),
-      );
-
-      if (!imageBlob) {
-        console.error('Failed to create image blob');
-        return null;
-      }
-      const formData = new FormData();
-      const api_key = process.env.NEXT_PUBLIC_API_KEY as string;
-      const upload_preset = process.env.NEXT_PUBLIC_UPLOAD_PRESET as string;
-      formData.append('file', imageBlob);
-      formData.append('upload_preset', upload_preset);
-      formData.append('public_id', publicId);
-      formData.append('api_key', api_key);
       try {
+        await Promise.all(imagePromises);
+        const canvas = await html2canvas(cardElement, {
+          useCORS: true,
+          backgroundColor: '#020617',
+          scale: 6,
+          allowTaint: true,
+        });
+
+        const imageBlob = await new Promise<Blob | null>((resolve) =>
+          canvas.toBlob(resolve, 'image/png'),
+        );
+
+        if (!imageBlob) {
+          console.error('Failed to create image blob');
+          setIsLoading(false);
+          return;
+        }
+
+        const formData = new FormData();
+        const api_key = process.env.NEXT_PUBLIC_API_KEY as string;
+        const upload_preset = process.env.NEXT_PUBLIC_UPLOAD_PRESET as string;
+        formData.append('file', imageBlob);
+        formData.append('upload_preset', upload_preset);
+        formData.append('public_id', publicId);
+        formData.append('api_key', api_key);
+
         const uploadResponse = await axios.post(
           'https://api.cloudinary.com/v1_1/linktopost/image/upload',
           formData,
         );
         const uploadedImageUrl = uploadResponse.data.url;
         setShareUrl(uploadedImageUrl);
+        setHasUploaded(true);
         setIsLoading(false);
-        return uploadedImageUrl;
       } catch (uploadError) {
         console.error('Error uploading image:', uploadError);
-        return null;
+        setIsLoading(false);
       }
     }
   };
+
+  useEffect(() => {
+    loadImageWithRetry(profile, 3)
+      .then(() => setProfileImageLoaded(true))
+      .catch((error) => {
+        console.error('Profile image failed to load:', error);
+        setProfileImageLoaded(false);
+      });
+  }, [profile]);
+
+  useEffect(() => {
+    if (!hasUploaded && profileImageLoaded) {
+      handleShareUpload();
+    }
+  }, [hasUploaded, profileImageLoaded]);
 
   const formatViews = (views: number) => {
     if (views >= 1000) {
@@ -107,10 +150,6 @@ export function YoutubeCard({
     navigator.clipboard.writeText(content);
     setOnClickCopy(true);
   };
-
-  useEffect(() => {
-    handleShareUpload();
-  }, []);
 
   return (
     <div className="flex flex-col">
@@ -139,10 +178,9 @@ export function YoutubeCard({
             <div className="p-4 bg-black rounded-b-2xl space-y-4">
               <div className="flex gap-4 itemd:ml-8ms-center">
                 <img
-                  src={profile || profileSrc}
+                  src={profile}
                   alt="profile"
                   className="w-14 h-14 object-cover rounded-full"
-                  onError={handleProfileImageError}
                 />
                 <div className="flex flex-col justify-center">
                   <div className="font-bold text-xl text-white font-geistmono">
