@@ -21,4 +21,11 @@ model Post {
   createdAt DateTime @default(now())
   userId    String
   user      User     @relation(fields: [userId], references: [id])
+  type      Type
+}
+
+enum Type {
+  YOUTUBE
+  LINKEDIN
+  GITHUB
 }

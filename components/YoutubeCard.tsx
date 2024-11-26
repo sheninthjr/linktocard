@@ -4,6 +4,8 @@ import axios from 'axios';
 import { ChartLine, Copy, Download, HandHeart, Link } from 'lucide-react';
 import { YoutubeResponse } from '../types';
 import { useEffect, useState } from 'react';
+import { SavingToDB } from '@/app/actions/SavingToDB';
+import { useSession } from 'next-auth/react';
 
 const loadImageWithRetry = (
   imageUrl: string,
@@ -40,7 +42,11 @@ export function YoutubeCard({
   const [isLoading, setIsLoading] = useState(false);
   const [onClickCopy, setOnClickCopy] = useState(false);
   const [hasUploaded, setHasUploaded] = useState(false);
+  const { data: session } = useSession();
   const [profileImageLoaded, setProfileImageLoaded] = useState(false);
+
+  const id = session?.user?.id;
+
   const handleCardDownload = async () => {
     const sanitizedTitle = title.replace(/\s+/g, '_').replace(/[^\w\-]+/g, '');
 
@@ -116,6 +122,7 @@ export function YoutubeCard({
         const uploadedImageUrl = uploadResponse.data.url;
         setShareUrl(uploadedImageUrl);
         setHasUploaded(true);
+        await SavingToDB(uploadedImageUrl, id || '');
         setIsLoading(false);
       } catch (uploadError) {
         console.error('Error uploading image:', uploadError);

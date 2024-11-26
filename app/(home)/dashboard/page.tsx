@@ -1,8 +1,29 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useSession } from 'next-auth/react';
 
 const Dashboard = () => {
-  const [activeState, setActiveState] = useState('youtube');
+  const [activeState, setActiveState] = useState('YOUTUBE');
+  const [posts, setPosts] = useState<any[]>([]);
+  const { data: session } = useSession();
+  const email = session?.user.email;
+
+  const fetchPosts = async (platform: string) => {
+    try {
+      const response = await axios.post('/api/user', { email, platform });
+      if (response.data && response.data.post) {
+        setPosts(response.data.post);
+      }
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    }
+  };
+  useEffect(() => {
+    if (email) {
+      fetchPosts(activeState);
+    }
+  }, [activeState, email]);
 
   const SocialButton = ({
     platform,
@@ -34,29 +55,48 @@ const Dashboard = () => {
         </div>
         <div className="flex gap-10 font-roboto text-xl">
           <SocialButton
-            platform="Youtube"
-            isActive={activeState === 'youtube'}
-            onClick={() => setActiveState('youtube')}
+            platform="YOUTUBE"
+            isActive={activeState === 'YOUTUBE'}
+            onClick={() => setActiveState('YOUTUBE')}
           />
           <SocialButton
-            platform="LinkedIn"
-            isActive={activeState === 'linkedin'}
-            onClick={() => setActiveState('linkedin')}
+            platform="LINKEDIN"
+            isActive={activeState === 'LINKEDIN'}
+            onClick={() => setActiveState('LINKEDIN')}
           />
           <SocialButton
-            platform="Github"
-            isActive={activeState === 'github'}
-            onClick={() => setActiveState('github')}
+            platform="GITHUB"
+            isActive={activeState === 'GITHUB'}
+            onClick={() => setActiveState('GITHUB')}
           />
           <SocialButton
-            platform="Instagram"
-            isActive={activeState === 'instagram'}
-            onClick={() => setActiveState('instagram')}
+            platform="INSTAGRAM"
+            isActive={activeState === 'INSTAGRAM'}
+            onClick={() => setActiveState('INSTAGRAM')}
           />
         </div>
         <div className="mt-8 ml-3">
           <h2 className="text-2xl font-semibold">{activeState} Content</h2>
-          <p>Details about {activeState} would go here.</p>
+          <div className="flex flex-wrap gap-4 mt-4">
+            {posts.length > 0 ? (
+              posts.map((post: any) => (
+                <div
+                  key={post.id}
+                  className="w-[360px] md:w-[380px] rounded-2xl overflow-hidden"
+                >
+                  <div className="relative">
+                    <img
+                      src={post.postUrl}
+                      alt="Thumbnail"
+                      className="w-full object-cover h-fit rounded-t-2xl"
+                    />
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>No posts found for this platform</p>
+            )}
+          </div>
         </div>
       </div>
     </div>

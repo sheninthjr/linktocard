@@ -81,7 +81,7 @@ export function HomePage({ title }: { title: string }) {
   };
   return (
     <div className="xl:w-[90%] md:pr-10 lg:pl-10  md:pl-16 lg:pr-10 flex mx-auto flex-col w-full lg:flex-row justify-center items-center rounded-2xl shadow-lg overflow-hidden space-y-10 md:space-y-0 pb-10 md:pb-0">
-      <div className="lg:w-1/2 w-full pt-24 flex md:p-8 flex-col justify-center space-y-16 h-fit items-center rounded-l-xl">
+      <div className="lg:w-1/2 w-full flex md:p-8 flex-col space-y-16 h-screen justify-center items-center rounded-l-xl">
         <div className="self-start flex flex-col space-y-4">
           <TitleCard />
         </div>
