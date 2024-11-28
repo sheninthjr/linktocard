@@ -1,14 +1,16 @@
 'use client';
 import { useEffect, useState } from 'react';
 import {
-  ContactRoundIcon,
+  Github,
   Home,
   LayoutDashboard,
   LogIn,
   Menu,
   X,
+  Linkedin,
+  LogOut,
 } from 'lucide-react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -19,8 +21,10 @@ export function Navbar() {
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
   const [isActiveId, setIsActiveId] = useState('');
   const pathname = usePathname();
+  const router = useRouter();
 
   const handleClickLink = (id: string) => {
+    setIsSidebarVisible(false);
     setIsActiveId(id);
   };
 
@@ -29,8 +33,10 @@ export function Navbar() {
       setIsActiveId('home');
     } else if (pathname === '/dashboard') {
       setIsActiveId('dashboard');
-    } else if (pathname === '/youtube') {
-      setIsActiveId('youtube');
+    } else if (pathname === '/github') {
+      setIsActiveId('github');
+    } else if (pathname === '/linkedin') {
+      setIsActiveId('linkedin');
     }
   }, [pathname]);
   const toggleSidebar = () => {
@@ -67,13 +73,13 @@ export function Navbar() {
         </div>
       </div>
       {isSidebarVisible && (
-        <div className="fixed ml-3 top-[5em] left-0 w-[94%] rounded-2xl z-10 backdrop-blur-lg bg-white bg-opacity-10 p-4 md:hidden">
+        <div className="fixed ml-3 top-[5em] mt-2 left-0 w-[94%] rounded-2xl z-10 backdrop-blur-lg bg-white bg-opacity-10 p-4 md:hidden">
           <div className="flex flex-col space-y-4 text-white">
             <Link href="/home" onClick={() => handleClickLink('home')}>
               <div
                 id="home"
                 className={`p-2 pl-3 rounded-full self-center flex text-white font-bold gap-4 text-xl cursor-pointer ${
-                  isActiveId === 'home' ? 'bg-blue-500' : 'bg-transparent'
+                  isActiveId === 'home' ? 'bg-slate-950' : 'bg-transparent'
                 }`}
               >
                 <Home /> Home
@@ -86,24 +92,52 @@ export function Navbar() {
               <div
                 id="dashboard"
                 className={`p-2 pl-3 rounded-full self-center flex text-white font-bold gap-4 text-xl  cursor-pointer ${
-                  isActiveId === 'dashboard' ? 'bg-blue-500' : 'bg-transparent'
+                  isActiveId === 'dashboard' ? 'bg-slate-950' : 'bg-transparent'
                 }`}
               >
                 <LayoutDashboard /> Dashboard
               </div>
             </Link>
-            <Link href="/contact" onClick={() => handleClickLink('contact')}>
+            <Link href="/github" onClick={() => handleClickLink('github')}>
               <div
-                id="contact"
+                id="github"
                 className={`p-2 pl-3 rounded-full self-center flex text-white font-bold gap-4 text-xl cursor-pointer ${
-                  isActiveId === 'contact' ? 'bg-blue-500' : 'bg-transparent'
+                  isActiveId === 'github' ? 'bg-slate-950' : 'bg-transparent'
                 }`}
               >
-                <ContactRoundIcon /> Contact
+                <Github /> Github
               </div>
             </Link>
-            <div className="flex gap-4 font-bold text-xl items-center">
-              <LogIn className="text-blue-400 ml-2" /> Login
+            <Link href="/linkedin" onClick={() => handleClickLink('linkedin')}>
+              <div
+                id="linkedin"
+                className={`p-2 pl-3 rounded-full self-center flex text-white font-bold gap-4 text-xl cursor-pointer ${
+                  isActiveId === 'linkedin' ? 'bg-slate-950' : 'bg-transparent'
+                }`}
+              >
+                <Linkedin /> LinkedIn
+              </div>
+            </Link>
+            <div className="flex gap-4 ml-2 font-bold text-xl items-center">
+              {session?.user.name ? (
+                <div
+                  className="flex gap-3"
+                  onClick={() => {
+                    router.push('/api/auth/signin');
+                  }}
+                >
+                  <LogOut className="ml-2" /> <span>Logout</span>
+                </div>
+              ) : (
+                <div
+                  className="flex gap-3"
+                  onClick={() => {
+                    router.push('/api/auth/signin');
+                  }}
+                >
+                  <LogIn className="ml-2" /> <span>Login</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
