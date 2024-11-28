@@ -27,7 +27,7 @@ export function TitleCard({
               YOUTUBE
             </div>
           </div>
-          <div className="bg-black text-white p-2 flex space-x-2 rounded-2xl text-lg self-start font-bold font-montserrat">
+          <div className="bg-black text-white p-1 md:p-2 flex space-x-2 rounded-2xl text-lg self-center lg:self-start font-bold font-montserrat">
             <button
               className={`${activeState === true && 'bg-slate-800'} p-1 pl-3 pr-3 rounded-xl`}
               onClick={() => onChangeState('video')}

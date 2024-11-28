@@ -272,14 +272,14 @@ export function YoutubeCard({
           </button>
         </div>
       </div>
-      <div className="ml-2 mt-4 flex items-center">
+      <div className="ml-2 mt-4 flex items-center self-center md:self-start">
         <button
           onClick={() => copyToClipboard(shareUrl)}
           className={`flex items-center gap-2 self-center ${isLoading ? 'pointer-events-none opacity-50' : ''}`}
         >
           <Copy className="text-white" />
           <span className="text-white font-mono text-xl font-semibold">
-            {onClickCopy ? 'Copied' : 'Copy Link'}
+            Copy Link
           </span>
         </button>
       </div>

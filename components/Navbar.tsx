@@ -39,7 +39,7 @@ export function Navbar() {
 
   return (
     <div>
-      <div className="absolute top-0 right-0 p-6 flex gap-2 items-center">
+      <div className="hidden absolute top-0 right-0 p-6 md:flex gap-2 items-center">
         {session?.user && (
           <div className="bg-neutral-800 self-center rounded-full p-1.5 w-fit">
             <Image

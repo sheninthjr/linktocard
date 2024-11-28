@@ -1,27 +1,18 @@
-import { Github, Instagram, LinkedIn, Notion, Twitter } from './Icons';
+import { Youtube } from 'lucide-react';
+import { Github, LinkedIn } from './Icons';
 
 const logos = [
+  {
+    name: 'Youtube',
+    url: <Youtube className="w-16 h-16 brightness-100 invert-1 mx-10" />,
+  },
   {
     name: 'Github',
     url: <Github className="w-16 h-16 brightness-100 invert-1 mx-10" />,
   },
   {
-    name: 'Notion',
-    url: <Notion className="w-16 h-16 brightness-100 invert-1 mx-10" />,
-  },
-  {
-    name: 'Instagram',
-    url: (
-      <Instagram className="w-20 h-20 font-extrabold brightness-100 invert-1 mx-10" />
-    ),
-  },
-  {
     name: 'LinkedIn',
     url: <LinkedIn className="w-16 h-16 brightness-100 invert-1 mx-10" />,
-  },
-  {
-    name: 'Twitter',
-    url: <Twitter className="w-16 h-16 brightness-100 invert-1 mx-10" />,
   },
 ];
 

@@ -94,22 +94,24 @@ export function HomePage({ title }: { title: string }) {
     setButtonClicked(true);
   };
   return (
-    <div className="xl:w-[90%] md:pr-10 lg:pl-10  md:pl-16 lg:pr-10 flex mx-auto flex-col w-full lg:flex-row justify-center items-center rounded-2xl shadow-lg overflow-hidden space-y-10 md:space-y-0 pb-10 md:pb-0">
-      <div className="lg:w-1/2 w-full flex md:p-8 flex-col space-y-16 h-screen justify-center items-center rounded-l-xl">
-        <div className="self-start flex flex-col space-y-4">
+    <div className="xl:w-[90%] md:pr-10 lg:pl-16 md:pl-16 lg:pr-10 h-screen flex mx-auto flex-col w-full lg:flex-row justify-center items-center rounded-2xl shadow-lg space-y-10 md:space-y-0 pb-10 md:pb-0 overflow-y-auto">
+      <div
+        className={`lg:w-1/2 pl-3 h-[100%] ${buttonClicked || isLoading ? 'mt-[650px] md:mt-[600px]' : 'mt-8'} lg:mt-0 flex md:p-8 flex-col space-y-8 md:space-y-16 justify-center items-center rounded-l-xl`}
+      >
+        <div className="self-center lg:self-start flex flex-col space-y-2 md:space-y-4">
           <TitleCard onIdChange={setIdState} />
         </div>
         <div className="self-start flex flex-col space-y-3">
-          <div className="font-extrabold text-7xl self-start font-montserrat">
+          <div className="font-extrabold text-3xl md:text-5xl lg:text-6xl xl:text-7xl self-center lg:text-center lg:self-start font-montserrat">
             Just Paste & Click!
           </div>
-          <h1 className="text-white text-2xl text-start self-start font-thin leading-tight">
+          <h1 className="text-zinc-400 text-xl md:text-2xl m-2 self-center md:self-start text-center font-notosans leading-tight">
             Make your link look great. Just turn it into a post!
           </h1>
         </div>
         <input
           type="text"
-          className="p-4 border border-slate-500 text-white text-lg self-start outline-none w-[80%] rounded-lg"
+          className="p-4 border border-slate-500 text-white text-lg xl:self-start outline-none w-[97%] lg:w-[90%] self-center rounded-lg"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           style={{
@@ -123,24 +125,26 @@ export function HomePage({ title }: { title: string }) {
           }}
         />
         <button
-          className="text-black text-lg mr-48 font-semibold py-2 px-6 rounded-2xl transition duration-300 bg-white border border-slate-700"
+          className="text-black text-lg self-center xl:mr-20 font-semibold py-2 px-6 rounded-2xl transition duration-300 bg-white border border-slate-700"
           onClick={handleButtonClick}
         >
           Generate
         </button>
       </div>
-      <LineFalling />
-      <div className="flex justify-center items-center self-center rounded-r-2xl h-screen md:pl-20 lg:pl-0 xl:pl-0 w-full md:w-1/2 p-8">
+      <div className="hidden lg:block">
+        <LineFalling />
+      </div>
+      <div className="flex justify-center items-center self-center rounded-r-2xl md:pl-20 lg:pl-0 xl:pl-0 w-full md:w-1/2 p-8">
         {!isLoading && !buttonClicked && (
-          <span className="font-bold self-center text-xl">
-            Once you generate the card will appear here
+          <span className="font-bold text-center self-center text-xl">
+            Once you generate the post will appear here
           </span>
         )}
         {isLoading ? (
           <Loader />
         ) : (
           buttonClicked && (
-            <>
+            <div className="">
               {title === 'youtube' && (
                 <YoutubeCard
                   id={idState}
@@ -175,7 +179,7 @@ export function HomePage({ title }: { title: string }) {
                   repoName={githubMetadata.repoName}
                 />
               )}
-            </>
+            </div>
           )
         )}
       </div>
