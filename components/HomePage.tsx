@@ -12,7 +12,7 @@ import { LineFalling } from './LineFalling';
 export function HomePage({ title }: { title: string }) {
   const [url, setUrl] = useState('');
   const [buttonClicked, setButtonClicked] = useState(false);
-
+  const [idState, setIdState] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
   const [metadata, setMetaData] = useState({
     title: '',
@@ -39,6 +39,7 @@ export function HomePage({ title }: { title: string }) {
     avatar: '',
     image: '',
     prStatus: '',
+    repoName: '',
   });
 
   const handleButtonClick = async () => {
@@ -66,15 +67,28 @@ export function HomePage({ title }: { title: string }) {
         imageUrl: response.data.imageUrl,
       });
     } else if (title === 'github') {
-      const response = await axios.post('api/github', { url });
-      setGithubMetadata({
-        title: response.data.title,
-        description: response.data.description,
-        userName: response.data.userName,
-        avatar: response.data.avatar,
-        image: response.data.image,
-        prStatus: response.data.prStatus,
-      });
+      if (idState === 'pr') {
+        const response = await axios.post('api/github/pr', { url });
+        setGithubMetadata({
+          title: response.data.title,
+          description: response.data.description,
+          userName: response.data.userName,
+          avatar: response.data.avatar,
+          image: response.data.image,
+          prStatus: response.data.prStatus,
+          repoName: response.data.repoName,
+        });
+      } else {
+        const response = await axios.post('api/github', { url });
+        setGithubMetadata({
+          title: response.data.title,
+          description: response.data.description,
+          userName: response.data.userName,
+          avatar: response.data.avatar,
+          image: response.data.image,
+          prStatus: response.data.prStatus,
+        });
+      }
     }
     setIsLoading(false);
     setButtonClicked(true);
@@ -83,7 +97,7 @@ export function HomePage({ title }: { title: string }) {
     <div className="xl:w-[90%] md:pr-10 lg:pl-10  md:pl-16 lg:pr-10 flex mx-auto flex-col w-full lg:flex-row justify-center items-center rounded-2xl shadow-lg overflow-hidden space-y-10 md:space-y-0 pb-10 md:pb-0">
       <div className="lg:w-1/2 w-full flex md:p-8 flex-col space-y-16 h-screen justify-center items-center rounded-l-xl">
         <div className="self-start flex flex-col space-y-4">
-          <TitleCard />
+          <TitleCard onIdChange={setIdState} />
         </div>
         <div className="self-start flex flex-col space-y-3">
           <div className="font-extrabold text-7xl self-start font-montserrat">
@@ -129,6 +143,7 @@ export function HomePage({ title }: { title: string }) {
             <>
               {title === 'youtube' && (
                 <YoutubeCard
+                  id={idState}
                   title={metadata.title}
                   description={metadata.description}
                   url={metadata.url}
@@ -157,6 +172,7 @@ export function HomePage({ title }: { title: string }) {
                   avatar={githubMetadata.avatar}
                   image={githubMetadata.image}
                   prStatus={githubMetadata.prStatus}
+                  repoName={githubMetadata.repoName}
                 />
               )}
             </>

@@ -12,6 +12,7 @@ export function GithubCard({
   avatar,
   image,
   prStatus,
+  repoName,
 }: GithubResponse) {
   const [shareUrl, setShareUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -113,7 +114,7 @@ export function GithubCard({
                 alt="icon"
                 className="w-12 h-12 absolute border-2 border-slate-600 z-5 mb-8 ml-5 rounded-xl bg-white"
               />
-              <div className="flex-1 absolute z-9 font-bold text-lg text-white justify-center pl-16 pb-3 truncate w-[310px] text-start">
+              <div className="flex-1 ml-2 absolute z-9 font-bold text-lg text-white justify-center pl-16 pb-3 truncate w-[310px] text-start">
                 {title}
               </div>
             </div>
@@ -126,7 +127,7 @@ export function GithubCard({
                 />
                 <div className="flex flex-col justify-center">
                   <div className="font-bold text-xl text-white font-geistmono">
-                    {userName}
+                    @{userName}
                   </div>
                   <div className="text-white text-center font-mono truncate">
                     {prStatus === 'Merged' && (
@@ -159,6 +160,7 @@ export function GithubCard({
               <div className="text-white line-clamp-5 pb-1 text-lg">
                 {description}
               </div>
+              <div className="font-bold text-slate-400">@ {repoName}</div>
             </div>
           </div>
         </div>

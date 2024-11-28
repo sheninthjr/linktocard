@@ -2,7 +2,6 @@
 import {
   GithubIcon,
   Home,
-  Instagram,
   LayoutDashboard,
   Linkedin,
   LogIn,
@@ -28,8 +27,6 @@ export function Sidebar() {
       setIsActiveId('linkedin');
     } else if (pathname === '/github') {
       setIsActiveId('github');
-    } else if (pathname === '/instagram') {
-      setIsActiveId('instagram');
     }
   }, [pathname]);
 
@@ -86,7 +83,7 @@ export function Sidebar() {
                 <GithubIcon />
               </div>
             </Link>
-            <Link
+            {/* <Link
               href="/instagram"
               onClick={() => handleClickLink('instagram')}
             >
@@ -98,7 +95,7 @@ export function Sidebar() {
               >
                 <Instagram />
               </div>
-            </Link>
+            </Link> */}
           </div>
           <div className="text-red-600">
             <LogIn className="text-blue-400" />

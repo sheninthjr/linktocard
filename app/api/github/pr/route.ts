@@ -16,25 +16,33 @@ export async function POST(req: NextRequest) {
     });
 
     const $ = cheerio.load(data);
-    const title = $(
-      'meta[name="octolytics-dimension-repository_network_root_nwo"]',
-    ).attr('content');
-    const trimmedTitle = title?.split('/')[1];
+    const title = $('title').text();
     const description = $('meta[name="description"]').attr('content');
     const image =
       $('meta[name="twitter:image"]').attr('content') ||
       $('meta[property="og:image"]').attr('content');
-    const userName = title?.split('/')[0];
-    const prStatus = '';
+    const userName = $('meta[property="og:author:username"]').attr('content');
+    let prStatus = '';
+    if ($('span[reviewable_state="ready"].State--open').length > 0) {
+      prStatus = 'Open';
+    } else if ($('span[reviewable_state="ready"].State--closed').length > 0) {
+      prStatus = 'Closed';
+    } else if ($('span[reviewable_state="ready"].State--merged').length > 0) {
+      prStatus = 'Merged';
+    }
     const avatar = $('a.TimelineItem-avatar img').attr('src');
+    const repoName = $('meta[name="octolytics-dimension-repository_nwo"]').attr(
+      'content',
+    );
 
     return NextResponse.json({
-      title: trimmedTitle,
+      title,
       description,
       image,
       userName,
       prStatus,
       avatar,
+      repoName,
     });
   } catch (e) {
     console.error(e);

@@ -2,10 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
+import { Post } from '@/types';
 
 const Dashboard = () => {
   const [activeState, setActiveState] = useState('YOUTUBE');
-  const [posts, setPosts] = useState<any[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const { data: session } = useSession();
   const email = session?.user.email;
 
@@ -79,7 +80,7 @@ const Dashboard = () => {
           <h2 className="text-2xl font-semibold">{activeState} Content</h2>
           <div className="flex flex-wrap gap-4 mt-4">
             {posts.length > 0 ? (
-              posts.map((post: any) => (
+              posts.map((post: Post) => (
                 <div
                   key={post.id}
                   className="w-[360px] md:w-[380px] rounded-2xl overflow-hidden"

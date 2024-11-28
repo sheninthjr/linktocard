@@ -29,6 +29,7 @@ const loadImageWithRetry = (
 };
 
 export function YoutubeCard({
+  id,
   title,
   description,
   url,
@@ -37,7 +38,7 @@ export function YoutubeCard({
   userId,
   imagePath,
   views,
-}: YoutubeResponse) {
+}: YoutubeResponse & { id?: string }) {
   const [shareUrl, setShareUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [onClickCopy, setOnClickCopy] = useState(false);
@@ -45,7 +46,7 @@ export function YoutubeCard({
   const { data: session } = useSession();
   const [profileImageLoaded, setProfileImageLoaded] = useState(false);
 
-  const id = session?.user?.id;
+  const user = session?.user?.id;
 
   const handleCardDownload = async () => {
     const sanitizedTitle = title.replace(/\s+/g, '_').replace(/[^\w\-]+/g, '');
@@ -81,9 +82,8 @@ export function YoutubeCard({
           if (img.complete) {
             resolve();
           } else {
-            // @ts-ignore
-            img.onload = resolve;
-            img.onerror = reject;
+            img.onload = () => resolve();
+            img.onerror = (error) => reject(error);
           }
         });
       });
@@ -122,7 +122,7 @@ export function YoutubeCard({
         const uploadedImageUrl = uploadResponse.data.url;
         setShareUrl(uploadedImageUrl);
         setHasUploaded(true);
-        await SavingToDB(uploadedImageUrl, id || '');
+        await SavingToDB(uploadedImageUrl, user || '');
         setIsLoading(false);
       } catch (uploadError) {
         console.error('Error uploading image:', uploadError);
@@ -170,7 +170,7 @@ export function YoutubeCard({
               <img
                 src={imagePath}
                 alt="Thumbnail"
-                className="w-full object-cover h-48 rounded-t-2xl"
+                className={`w-full object-cover ${id === 'shorts' ? 'h-80' : 'h-48'} rounded-t-2xl`}
               />
               <div className="absolute z-8 flex-1 bg-white/50 backdrop-blur-md min-w-[346px] h-14 rounded-t-2xl"></div>
               <img
@@ -192,6 +192,7 @@ export function YoutubeCard({
                 <div className="flex flex-col justify-center">
                   <div className="font-bold text-xl text-white font-geistmono">
                     {userName}
+                    {id}
                   </div>
                   <div className="text-neutral-400">@{userId}</div>
                 </div>

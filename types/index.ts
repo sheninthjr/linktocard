@@ -25,4 +25,10 @@ export interface GithubResponse {
   userName: string;
   prStatus: string;
   avatar: string;
+  repoName?: string;
+}
+
+export interface Post {
+  id: string;
+  postUrl: string;
 }
