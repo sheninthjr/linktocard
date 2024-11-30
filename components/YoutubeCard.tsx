@@ -41,7 +41,7 @@ export function YoutubeCard({
 }: YoutubeResponse & { id?: string }) {
   const [shareUrl, setShareUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [onClickCopy, setOnClickCopy] = useState(false);
+  const [, setOnClickCopy] = useState(false);
   const [hasUploaded, setHasUploaded] = useState(false);
   const { data: session } = useSession();
   const [profileImageLoaded, setProfileImageLoaded] = useState(false);
