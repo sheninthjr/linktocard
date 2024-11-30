@@ -7,15 +7,14 @@ import {
   LogIn,
   LogOut,
 } from 'lucide-react';
-import { useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export function Sidebar() {
   const [isActiveId, setIsActiveId] = useState('');
   const { data: session } = useSession();
-  const router = useRouter();
   const pathname = usePathname();
 
   const handleClickLink = (id: string) => {
@@ -102,18 +101,17 @@ export function Sidebar() {
             </Link> */}
           </div>
           <button className="text-red-600">
-            {session?.user.email && (
+            {session?.user?.email ? (
               <LogIn
-                onClick={() => {
-                  router.push('/api/auth/signin');
+                onClick={async () => {
+                  await signIn();
                 }}
                 className="text-red-400"
               />
-            )}
-            {!session?.user.email && (
+            ) : (
               <LogOut
-                onClick={() => {
-                  router.push('/api/auth/signin');
+                onClick={async () => {
+                  await signOut({ redirect: false });
                 }}
                 className="text-blue-500"
               />

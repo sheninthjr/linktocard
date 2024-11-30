@@ -4,15 +4,21 @@ import { Github, LinkedIn } from './Icons';
 const logos = [
   {
     name: 'Youtube',
-    url: <Youtube className="w-16 h-16 brightness-100 invert-1 mx-10" />,
+    url: (
+      <Youtube className="w-10 h-10 md:w-16 md:h-16 brightness-100 invert-1 mx-10" />
+    ),
   },
   {
     name: 'Github',
-    url: <Github className="w-16 h-16 brightness-100 invert-1 mx-10" />,
+    url: (
+      <Github className="w-10 h-10 md:w-16 md:h-16 brightness-100 invert-1 mx-10" />
+    ),
   },
   {
     name: 'LinkedIn',
-    url: <LinkedIn className="w-16 h-16 brightness-100 invert-1 mx-10" />,
+    url: (
+      <LinkedIn className="w-10 h-10 md:w-16 md:h-16 brightness-100 invert-1 mx-10" />
+    ),
   },
 ];
 

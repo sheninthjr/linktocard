@@ -10,9 +10,9 @@ import {
   Linkedin,
   LogOut,
 } from 'lucide-react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import LiveUser from './LiveUser/LiveUser';
 
@@ -21,7 +21,6 @@ export function Navbar() {
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
   const [isActiveId, setIsActiveId] = useState('');
   const pathname = usePathname();
-  const router = useRouter();
 
   const handleClickLink = (id: string) => {
     setIsSidebarVisible(false);
@@ -122,8 +121,8 @@ export function Navbar() {
               {session?.user.name ? (
                 <div
                   className="flex gap-3"
-                  onClick={() => {
-                    router.push('/api/auth/signin');
+                  onClick={async () => {
+                    await signOut({ redirect: false });
                   }}
                 >
                   <LogOut className="ml-2" /> <span>Logout</span>
@@ -131,8 +130,8 @@ export function Navbar() {
               ) : (
                 <div
                   className="flex gap-3"
-                  onClick={() => {
-                    router.push('/api/auth/signin');
+                  onClick={async () => {
+                    await signIn();
                   }}
                 >
                   <LogIn className="ml-2" /> <span>Login</span>
