@@ -1,8 +1,13 @@
 'use server';
 
 import prisma from '@/db';
+import { Type } from '@/types';
 
-export async function SavingToDB(uploadedImageUrl: string, userId: string) {
+export async function SavingToDB(
+  uploadedImageUrl: string,
+  type: Type,
+  userId: string,
+) {
   if (!userId) {
     return;
   }
@@ -10,7 +15,7 @@ export async function SavingToDB(uploadedImageUrl: string, userId: string) {
     const response = await prisma.post.create({
       data: {
         postUrl: uploadedImageUrl,
-        type: 'YOUTUBE',
+        type: type,
         createdAt: new Date(),
         userId: userId,
       },

@@ -2,7 +2,7 @@
 import html2canvas from 'html2canvas-pro';
 import axios from 'axios';
 import { ChartLine, Copy, Download, HandHeart, Link } from 'lucide-react';
-import { YoutubeResponse } from '../types';
+import { Type, YoutubeResponse } from '../types';
 import { useEffect, useState } from 'react';
 import { SavingToDB } from '@/app/actions/SavingToDB';
 import { useSession } from 'next-auth/react';
@@ -122,7 +122,7 @@ export function YoutubeCard({
         const uploadedImageUrl = uploadResponse.data.url;
         setShareUrl(uploadedImageUrl);
         setHasUploaded(true);
-        await SavingToDB(uploadedImageUrl, user || '');
+        await SavingToDB(uploadedImageUrl, Type.YOUTUBE, user || '');
         setIsLoading(false);
       } catch (uploadError) {
         console.error('Error uploading image:', uploadError);

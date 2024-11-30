@@ -49,12 +49,12 @@ const Dashboard = () => {
   );
 
   return (
-    <div className="flex justify-start ml-32 pt-28 items-start h-screen self-start w-full">
+    <div className="flex justify-start ml:4 md:ml-32 pt-28 items-start h-screen self-start w-full overflow-y-auto">
       <div className="flex flex-col space-y-4">
-        <div className="font-extrabold font-montserrat text-5xl ml-2">
+        <div className="font-extrabold font-montserrat text-5xl ml-3 md:ml-0">
           Dashboard
         </div>
-        <div className="flex gap-10 font-roboto text-xl">
+        <div className="flex gap-10 font-roboto text-lg md:text-xl ml-3 md:ml-0 self-center md:self-start">
           <SocialButton
             platform="YOUTUBE"
             isActive={activeState === 'YOUTUBE'}
@@ -70,15 +70,9 @@ const Dashboard = () => {
             isActive={activeState === 'GITHUB'}
             onClick={() => setActiveState('GITHUB')}
           />
-          <SocialButton
-            platform="INSTAGRAM"
-            isActive={activeState === 'INSTAGRAM'}
-            onClick={() => setActiveState('INSTAGRAM')}
-          />
         </div>
-        <div className="mt-8 ml-3">
-          <h2 className="text-2xl font-semibold">{activeState} Content</h2>
-          <div className="flex flex-wrap gap-4 mt-4">
+        <div className="mt-8">
+          <div className="flex flex-wrap gap-4 mt-4 justify-center md:justify-start">
             {posts.length > 0 ? (
               posts.map((post: Post) => (
                 <div

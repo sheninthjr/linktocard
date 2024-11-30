@@ -9,8 +9,10 @@ import {
   HandHeart,
   Link,
 } from 'lucide-react';
-import { LinkedInResponse } from '../types';
+import { LinkedInResponse, Type } from '../types';
 import { useEffect, useState } from 'react';
+import { SavingToDB } from '@/app/actions/SavingToDB';
+import { useSession } from 'next-auth/react';
 
 export function LinkedInCard({
   authorName,
@@ -23,6 +25,9 @@ export function LinkedInCard({
   const [shareUrl, setShareUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [onClickCopy, setOnClickCopy] = useState(false);
+  const { data: session } = useSession();
+
+  const user = session?.user?.id;
 
   const handleCardDownload = async () => {
     const sanitizedTitle = followers
@@ -86,6 +91,7 @@ export function LinkedInCard({
         );
         const uploadedImageUrl = uploadResponse.data.secure_url;
         setShareUrl(uploadedImageUrl);
+        await SavingToDB(uploadedImageUrl, Type.LINKEDIN, user || '');
         setIsLoading(false);
         return uploadedImageUrl;
       } catch (uploadError) {

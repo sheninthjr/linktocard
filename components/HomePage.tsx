@@ -87,6 +87,7 @@ export function HomePage({ title }: { title: string }) {
           avatar: response.data.avatar,
           image: response.data.image,
           prStatus: response.data.prStatus,
+          repoName: response.data.repoName,
         });
       }
     }
@@ -134,7 +135,7 @@ export function HomePage({ title }: { title: string }) {
       <div className="hidden lg:block">
         <LineFalling />
       </div>
-      <div className="flex justify-center items-center self-center rounded-r-2xl md:pl-20 lg:pl-0 xl:pl-0 w-full md:w-1/2 p-8">
+      <div className="flex justify-center items-center self-center rounded-r-2xl md:pl-20 lg:pl-0 xl:pl-0 w-full md:w-1/2">
         {!isLoading && !buttonClicked && (
           <span className="font-bold text-center self-center text-xl">
             Once you generate the post will appear here

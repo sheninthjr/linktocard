@@ -34,7 +34,6 @@ export async function POST(req: NextRequest) {
     const repoName = $('meta[name="octolytics-dimension-repository_nwo"]').attr(
       'content',
     );
-
     return NextResponse.json({
       title,
       description,

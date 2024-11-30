@@ -32,3 +32,9 @@ export interface Post {
   id: string;
   postUrl: string;
 }
+
+export enum Type {
+  YOUTUBE = 'YOUTUBE',
+  GITHUB = 'GITHUB',
+  LINKEDIN = 'LINKEDIN',
+}

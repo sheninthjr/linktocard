@@ -1,9 +1,11 @@
 'use client';
 import html2canvas from 'html2canvas-pro';
 import axios from 'axios';
-import { CircleCheck, Copy, Download } from 'lucide-react';
-import { GithubResponse } from '../types';
+import { CircleCheck, Copy, Download, GitMerge } from 'lucide-react';
+import { GithubResponse, Type } from '../types';
 import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { SavingToDB } from '@/app/actions/SavingToDB';
 
 export function GithubCard({
   title,
@@ -17,6 +19,9 @@ export function GithubCard({
   const [shareUrl, setShareUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [onClickCopy, setOnClickCopy] = useState(false);
+  const { data: session } = useSession();
+
+  const user = session?.user?.id;
 
   const handleCardDownload = async () => {
     const sanitizedTitle = title.replace(/\s+/g, '_').replace(/[^\w\-]+/g, '');
@@ -76,6 +81,7 @@ export function GithubCard({
         );
         const uploadedImageUrl = uploadResponse.data.secure_url;
         setShareUrl(uploadedImageUrl);
+        await SavingToDB(uploadedImageUrl, Type.GITHUB, user || '');
         setIsLoading(false);
         return uploadedImageUrl;
       } catch (uploadError) {
@@ -131,12 +137,10 @@ export function GithubCard({
                   </div>
                   <div className="text-white text-center font-mono truncate">
                     {prStatus === 'Merged' && (
-                      <img
-                        src="./merged.png"
-                        alt="prstatus"
-                        className="rounded-lg"
-                        width="100px"
-                      />
+                      <div className="bg-[#A569EA] flex rounded-xl font-bold pl-3 pr-3 text-xl">
+                        <GitMerge className="w-5 h-5 mr-1 self-center" />{' '}
+                        {prStatus}
+                      </div>
                     )}
                     {prStatus === 'Open' && (
                       <img
@@ -153,6 +157,9 @@ export function GithubCard({
                         className="rounded-lg"
                         width="100px"
                       />
+                    )}
+                    {!['Merged', 'Open', 'Closed'].includes(prStatus) && (
+                      <div className="pr-8">{prStatus}</div>
                     )}
                   </div>
                 </div>
