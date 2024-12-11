@@ -28,12 +28,8 @@ const downloadImage = async (url: string, fileName: string) => {
 
 const fetchYTProfile = async (userId: string) => {
   try {
-    const profileUrl = `http://localhost:8080/http://www.youtube.com/@${userId}`;
-    const { data } = await axios.get(profileUrl, {
-      headers: {
-        Origin: 'http://localhost',
-      },
-    });
+    const profileUrl = `http://www.youtube.com/@${userId}`;
+    const { data } = await axios.get(profileUrl);
     const $ = cheerio.load(data);
     const imageSrc = $('link[rel="image_src"]').attr('href');
     return imageSrc;
@@ -46,11 +42,7 @@ const fetchYTProfile = async (userId: string) => {
 const fetchYouTubeData = async (url: string) => {
   try {
     const formattedUrl = url.startsWith('http') ? url : `https://${url}`;
-    const { data } = await axios.get(`http://localhost:8080/${formattedUrl}`, {
-      headers: {
-        Origin: 'http://localhost',
-      },
-    });
+    const { data } = await axios.get(`${formattedUrl}`);
 
     const $ = cheerio.load(data);
     const title = $('meta[name="title"]').attr('content');
@@ -99,11 +91,21 @@ export async function POST(req: NextRequest) {
 
   try {
     const videoData = await fetchYouTubeData(url);
-    return NextResponse.json(videoData);
+    const response = NextResponse.json(videoData);
+    response.headers.set('Access-Control-Allow-Origin', '*');
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST');
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+
+    return response;
   } catch (error) {
     console.log(error);
-    return NextResponse.json({
+    const response = NextResponse.json({
       message: 'Error while extracting',
     });
+    response.headers.set('Access-Control-Allow-Origin', '*');
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST');
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+
+    return response;
   }
 }
