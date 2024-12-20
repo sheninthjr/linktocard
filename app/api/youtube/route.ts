@@ -2,7 +2,6 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import { NextRequest, NextResponse } from 'next/server';
 
-// Function to get YouTube video ID from URL
 const getVideoId = (url: string) => {
   const regExp =
     /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
@@ -10,18 +9,13 @@ const getVideoId = (url: string) => {
   return match && match[7].length === 11 ? match[7] : null;
 };
 
-// Function to get embedded YouTube page
 const fetchYouTubeData = async (url: string) => {
   try {
     const videoId = getVideoId(url);
     if (!videoId) {
       throw new Error('Invalid YouTube URL');
     }
-
-    // Use the embed URL instead of the regular URL
     const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
-
-    // First try to fetch the oEmbed data
     const oembedResponse = await axios.get(
       `https://www.youtube.com/oembed?url=${watchUrl}&format=json`,
       {
@@ -29,23 +23,82 @@ const fetchYouTubeData = async (url: string) => {
           'User-Agent':
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
           Accept: 'application/json',
+          Referer: 'https://www.youtube.com/',
         },
       },
     );
-
-    // Fetch the watch page for description
     const watchResponse = await axios.get(watchUrl, {
       headers: {
         'User-Agent':
           'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         Accept:
           'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        Referer: 'https://www.youtube.com/',
+        DNT: '1',
+        Connection: 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'none',
+        'Sec-Fetch-User': '?1',
+        'Cache-Control': 'max-age=0',
       },
     });
 
     const watchPage$ = cheerio.load(watchResponse.data);
 
-    // Multiple ways to try getting the description
+    let views = '0';
+    try {
+      const jsonLd = watchPage$('script[type="application/ld+json"]').html();
+      if (jsonLd) {
+        const jsonData = JSON.parse(jsonLd);
+        if (jsonData?.interactionStatistic?.userInteractionCount) {
+          views = jsonData.interactionStatistic.userInteractionCount;
+        }
+      }
+      if (views === '0') {
+        const scripts = watchPage$('script').get();
+        for (const script of scripts) {
+          const content = watchPage$(script).html() || '';
+          if (content.includes('ytInitialData')) {
+            const match = content.match(
+              /"viewCount":\s*{\s*"simpleText":\s*"([\d,]+)"/,
+            );
+            if (match && match[1]) {
+              views = match[1].replace(/,/g, '');
+              break;
+            }
+          }
+        }
+      }
+      if (views === '0') {
+        const patterns = [
+          /"viewCount":"(\d+)"/,
+          /\"viewCount\":\"(\d+)\"/,
+          /"viewCount":(\d+)/,
+          /"videoViewCountRenderer":\{"viewCount":\{"simpleText":"([\d,]+)/,
+        ];
+
+        for (const pattern of patterns) {
+          const match = watchResponse.data.match(pattern);
+          if (match && match[1]) {
+            views = match[1].replace(/,/g, '');
+            break;
+          }
+        }
+      }
+      if (views === '0') {
+        const metaViews = watchPage$('meta[itemprop="interactionCount"]').attr(
+          'content',
+        );
+        if (metaViews) {
+          views = metaViews;
+        }
+      }
+    } catch (error) {
+      console.error('Error extracting views:', error);
+    }
     const description =
       watchPage$('meta[property="og:description"]').attr('content') ||
       watchPage$('meta[name="description"]').attr('content') ||
@@ -72,8 +125,6 @@ const fetchYouTubeData = async (url: string) => {
     const authorName = oembedResponse.data.author_name || '';
     const authorUrl = oembedResponse.data.author_url || '';
     const userId = authorUrl.split('@')[1] || '';
-
-    // Get profile image using author URL
     let profile = null;
     try {
       if (authorUrl) {
@@ -81,6 +132,7 @@ const fetchYouTubeData = async (url: string) => {
           headers: {
             'User-Agent':
               'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            Referer: 'https://www.youtube.com/',
           },
         });
         const author$ = cheerio.load(authorResponse.data);
@@ -89,8 +141,6 @@ const fetchYouTubeData = async (url: string) => {
     } catch (error) {
       console.error('Error fetching profile:', error);
     }
-
-    // Download and upload thumbnail if needed
     let imagePath = null;
     if (thumbnailUrl) {
       try {
@@ -101,17 +151,6 @@ const fetchYouTubeData = async (url: string) => {
       } catch (error) {
         console.error('Error downloading thumbnail:', error);
       }
-    }
-
-    // Try to get views from microdata
-    let views = '0';
-    try {
-      const viewMatch = watchResponse.data.match(/"viewCount":"(\d+)"/);
-      if (viewMatch) {
-        views = viewMatch[1];
-      }
-    } catch (error) {
-      console.error('Error fetching views:', error);
     }
 
     return {
