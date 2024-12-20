@@ -3,9 +3,22 @@ import * as cheerio from 'cheerio';
 import { NextRequest, NextResponse } from 'next/server';
 
 const userImage = async (url: string) => {
-  const { data } = await axios.get(`http://localhost:8080/${url}`, {
+  const { data } = await axios.get(`${url}`, {
     headers: {
-      Origin: 'http://localhost',
+      'User-Agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      Accept:
+        'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+      'Accept-Language': 'en-US,en;q=0.5',
+      Referer: 'https://github.com/',
+      DNT: '1',
+      Connection: 'keep-alive',
+      'Upgrade-Insecure-Requests': '1',
+      'Sec-Fetch-Dest': 'document',
+      'Sec-Fetch-Mode': 'navigate',
+      'Sec-Fetch-Site': 'none',
+      'Sec-Fetch-User': '?1',
+      'Cache-Control': 'max-age=0',
     },
   });
   const $ = cheerio.load(data);
@@ -22,9 +35,22 @@ export async function POST(req: NextRequest) {
     if (!url) {
       return NextResponse.json({ message: 'Url Required' }, { status: 400 });
     }
-    const { data } = await axios.get(`http://localhost:8080/${url}`, {
+    const { data } = await axios.get(`${url}`, {
       headers: {
-        Origin: 'http://localhost',
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        Accept:
+          'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        Referer: 'https://github.com/',
+        DNT: '1',
+        Connection: 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'none',
+        'Sec-Fetch-User': '?1',
+        'Cache-Control': 'max-age=0',
       },
     });
 
