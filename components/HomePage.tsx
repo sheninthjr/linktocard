@@ -100,7 +100,7 @@ export function HomePage({ title }: { title: string }) {
         className={`lg:w-1/2 pl-3 h-[100%] ${buttonClicked || isLoading ? 'mt-[650px] md:mt-[600px]' : 'mt-8'} lg:mt-0 flex md:p-8 flex-col space-y-8 md:space-y-16 justify-center items-center rounded-l-xl`}
       >
         <div className="self-center lg:self-start flex flex-col space-y-2 md:space-y-4">
-          <TitleCard onIdChange={setIdState} />
+          <TitleCard onIdChange={setIdState} setUrl={setUrl} />
         </div>
         <div className="self-start flex flex-col space-y-3">
           <div className="font-extrabold text-3xl md:text-5xl lg:text-6xl xl:text-7xl self-center lg:text-center lg:self-start font-montserrat">

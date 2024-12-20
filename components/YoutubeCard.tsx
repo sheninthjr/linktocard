@@ -6,6 +6,7 @@ import { Type, YoutubeResponse } from '../types';
 import { useEffect, useState } from 'react';
 import { SavingToDB } from '@/app/actions/SavingToDB';
 import { useSession } from 'next-auth/react';
+import { Bounce, toast } from 'react-toastify';
 
 const loadImageWithRetry = (
   imageUrl: string,
@@ -74,7 +75,17 @@ export function YoutubeCard({
     const sanitizedTitle = title.replace(/\s+/g, '_').replace(/[^\w\-]+/g, '');
     const publicId = `${userId}_${sanitizedTitle}`;
     const cardElement = document.getElementById('card');
-
+    toast.info('Profile not visible? 🔄 Kindly regenerate it!', {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      transition: Bounce,
+    });
     if (cardElement && profileImageLoaded) {
       const images = cardElement.querySelectorAll('img');
       const imagePromises = Array.from(images).map((img) => {
@@ -174,7 +185,7 @@ export function YoutubeCard({
               />
               <div className="absolute z-8 flex-1 bg-white/50 backdrop-blur-md min-w-[346px] h-14 rounded-t-2xl"></div>
               <img
-                src="/yt.png"
+                src="/yt1.png"
                 alt="icon"
                 className="w-12 h-12 absolute z-5 mb-8 ml-5 rounded-xl bg-white"
               />
@@ -259,7 +270,7 @@ export function YoutubeCard({
             className={`text-white rounded-lg ${isLoading ? 'pointer-events-none opacity-50' : ''}`}
           >
             <img
-              src="./insta.webp"
+              src="./insta1.webp"
               alt="Instagram"
               className="w-12 h-12 rounded-lg hover:scale-150"
             />

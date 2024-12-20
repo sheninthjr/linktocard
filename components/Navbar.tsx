@@ -14,7 +14,6 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
-import LiveUser from './LiveUser/LiveUser';
 
 export function Navbar() {
   const { data: session } = useSession();
@@ -56,23 +55,29 @@ export function Navbar() {
             />
           </div>
         )}
-        <LiveUser />
       </div>
-      <div
-        className="flex text-white inset-3 h-12 rounded-xl z-10 mt-3 backdrop-blur-lg w-[94%] md:w-fit justify-between items-center p-3 fixed"
-        style={{
-          background: 'rgba(255, 255, 255, 0.1)',
-        }}
-      >
-        <div className="text-2xl font-bold font-mono">
-          <a href="/">L2P</a>
+      <div className="flex text-white inset-3 h-12 rounded-xl z-10 mt-3 backdrop-blur-lg w-[94%] md:w-fit justify-between items-center p-3 fixed">
+        <div className="">
+          <a href="/">
+            <img
+              src="/L2P.png"
+              alt="Logo"
+              className="object-cover h-12 w-12 self-center"
+            />
+          </a>
         </div>
-        <div className="md:hidden" onClick={toggleSidebar}>
+        <div
+          className="md:hidden p-2 rounded-2xl"
+          onClick={toggleSidebar}
+          style={{
+            background: 'rgba(255, 255, 255, 0.1)',
+          }}
+        >
           {isSidebarVisible ? <X /> : <Menu />}
         </div>
       </div>
       {isSidebarVisible && (
-        <div className="fixed ml-3 top-[5em] mt-2 left-0 w-[94%] rounded-2xl z-10 backdrop-blur-lg bg-white bg-opacity-10 p-4 md:hidden">
+        <div className="fixed ml-3 top-[5em] font-montserrat mt-2 left-0 w-[94%] rounded-2xl z-10 backdrop-blur-lg bg-white bg-opacity-10 p-4 md:hidden">
           <div className="flex flex-col space-y-4 text-white">
             <Link href="/home" onClick={() => handleClickLink('home')}>
               <div
@@ -81,7 +86,7 @@ export function Navbar() {
                   isActiveId === 'home' ? 'bg-slate-950' : 'bg-transparent'
                 }`}
               >
-                <Home /> Home
+                <Home /> HOME
               </div>
             </Link>
             <Link
@@ -94,7 +99,7 @@ export function Navbar() {
                   isActiveId === 'dashboard' ? 'bg-slate-950' : 'bg-transparent'
                 }`}
               >
-                <LayoutDashboard /> Dashboard
+                <LayoutDashboard /> DASHBOARD
               </div>
             </Link>
             <Link href="/github" onClick={() => handleClickLink('github')}>
@@ -104,7 +109,7 @@ export function Navbar() {
                   isActiveId === 'github' ? 'bg-slate-950' : 'bg-transparent'
                 }`}
               >
-                <Github /> Github
+                <Github /> GITHUB
               </div>
             </Link>
             <Link href="/linkedin" onClick={() => handleClickLink('linkedin')}>
@@ -114,7 +119,7 @@ export function Navbar() {
                   isActiveId === 'linkedin' ? 'bg-slate-950' : 'bg-transparent'
                 }`}
               >
-                <Linkedin /> LinkedIn
+                <Linkedin /> LINKEDIN
               </div>
             </Link>
             <div className="flex gap-4 ml-2 font-bold text-xl items-center">
@@ -125,7 +130,7 @@ export function Navbar() {
                     await signOut({ redirect: false });
                   }}
                 >
-                  <LogOut className="ml-2" /> <span>Logout</span>
+                  <LogOut className="ml-1" /> <span>LOGOUT</span>
                 </div>
               ) : (
                 <div
@@ -134,7 +139,7 @@ export function Navbar() {
                     await signIn();
                   }}
                 >
-                  <LogIn className="ml-2" /> <span>Login</span>
+                  <LogIn className="ml-1" /> <span>Login</span>
                 </div>
               )}
             </div>

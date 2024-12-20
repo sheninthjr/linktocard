@@ -13,6 +13,7 @@ import { LinkedInResponse, Type } from '../types';
 import { useEffect, useState } from 'react';
 import { SavingToDB } from '@/app/actions/SavingToDB';
 import { useSession } from 'next-auth/react';
+import { Bounce, toast } from 'react-toastify';
 
 export function LinkedInCard({
   authorName,
@@ -60,7 +61,17 @@ export function LinkedInCard({
 
     const publicId = `${authorName}_${sanitizedTitle}`;
     const cardElement = document.getElementById('card');
-
+    toast.info('Profile not visible? 🔄 Kindly regenerate it!', {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      transition: Bounce,
+    });
     if (cardElement) {
       const canvas = await html2canvas(cardElement, {
         useCORS: true,
@@ -212,7 +223,7 @@ export function LinkedInCard({
             className={`text-white rounded-lg ${isLoading ? 'pointer-events-none opacity-50' : ''}`}
           >
             <img
-              src="./insta.webp"
+              src="./insta1.webp"
               alt="Instagram"
               className="w-12 h-12 rounded-lg hover:scale-150"
             />

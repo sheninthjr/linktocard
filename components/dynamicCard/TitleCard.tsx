@@ -4,14 +4,17 @@ import { useState } from 'react';
 
 export function TitleCard({
   onIdChange,
+  setUrl,
 }: {
   onIdChange: (id: string) => void;
+  setUrl: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const pathname = usePathname();
   const [activeState, setActiveState] = useState(true);
   const [, setIdState] = useState<string>('video');
 
   function onChangeState(id: string) {
+    setUrl('');
     setActiveState((prev) => !prev);
     setIdState(id);
     onIdChange(id);
@@ -22,7 +25,7 @@ export function TitleCard({
       {pathname === '/home' && (
         <div className="flex flex-col space-y-3">
           <div className="space-x-3 flex font-mono items-center self-start">
-            <img src="./yt.png" className="h-20 w-20" />
+            <img src="./yt1.png" className="h-20 w-20" />
             <div className="self-center font-extrabold font-montserrat text-4xl">
               YOUTUBE
             </div>

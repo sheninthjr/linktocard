@@ -12,7 +12,7 @@ export default function Landing() {
           initial={{ opacity: 0, scale: 1.1 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, ease: 'easeInOut', delay: 0.2 }}
-          className="text-center w-[95%] m-1 md:w-full font-montserrat font-bold mx-auto bg-[linear-gradient(180deg,_#FFF_0%,_rgba(255,_255,_255,_0.00)_202.08%)] bg-clip-text text-5xl tracking-tighter text-transparent md:text-6xl lg:text-7xl"
+          className="text-center w-[95%] m-1 px-1 md:px-0 md:w-full font-montserrat font-bold mx-auto bg-[linear-gradient(180deg,_#FFF_0%,_rgba(255,_255,_255,_0.00)_202.08%)] bg-clip-text text-5xl tracking-tighter text-transparent md:text-6xl lg:text-7xl"
         >
           Paste your Link{' '}
           <span className="text-transparent bg-clip-text">then just</span>{' '}
@@ -24,9 +24,9 @@ export default function Landing() {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: 'easeInOut', delay: 0.3 }}
-          className="text-justify md:text-center w-[85%] font-thin leading-tight"
+          className="px-3 md:px-0 text-center w-[85%] font-thin leading-tight"
         >
-          <span className="text-2xl font-extrabold mr-2">LinktoPost</span>{' '}
+          <span className="text-2xl font-extrabold">LinktoPost</span>{' '}
           <span className="text-xl">
             is powerful post generator for various platforms. Simply paste your
             link and proceed with a single click. Share or download your post,
