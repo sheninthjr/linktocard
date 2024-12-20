@@ -174,7 +174,7 @@ export function YoutubeCard({
               />
               <div className="absolute z-8 flex-1 bg-white/50 backdrop-blur-md min-w-[346px] h-14 rounded-t-2xl"></div>
               <img
-                src="./yt.png"
+                src="/yt.png"
                 alt="icon"
                 className="w-12 h-12 absolute z-5 mb-8 ml-5 rounded-xl bg-white"
               />
