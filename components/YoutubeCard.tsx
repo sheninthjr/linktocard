@@ -166,6 +166,17 @@ export function YoutubeCard({
 
   const copyToClipboard = (content: string) => {
     navigator.clipboard.writeText(content);
+    toast.success('Copied to clipboard!', {
+      position: 'bottom-right',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      transition: Bounce,
+    });
     setOnClickCopy(true);
   };
 
@@ -288,8 +299,8 @@ export function YoutubeCard({
           onClick={() => copyToClipboard(shareUrl)}
           className={`flex items-center gap-2 self-center ${isLoading ? 'pointer-events-none opacity-50' : ''}`}
         >
-          <Copy className="text-white" />
-          <span className="text-white font-mono text-xl font-semibold">
+          <Copy className="text-neutral-400 hover:text-neutral-200" />
+          <span className="text-neutral-400 hover:text-neutral-200 font-mono text-xl font-semibold">
             Copy Link
           </span>
         </button>

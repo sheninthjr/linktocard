@@ -1,14 +1,7 @@
 'use client';
 import html2canvas from 'html2canvas-pro';
 import axios from 'axios';
-import {
-  ChartLine,
-  CircleCheck,
-  Copy,
-  Download,
-  HandHeart,
-  Link,
-} from 'lucide-react';
+import { ChartLine, Copy, Download, HandHeart, Link } from 'lucide-react';
 import { LinkedInResponse, Type } from '../types';
 import { useEffect, useState } from 'react';
 import { SavingToDB } from '@/app/actions/SavingToDB';
@@ -25,7 +18,7 @@ export function LinkedInCard({
 }: LinkedInResponse) {
   const [shareUrl, setShareUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [onClickCopy, setOnClickCopy] = useState(false);
+  const [, setOnClickCopy] = useState(false);
   const { data: session } = useSession();
 
   const user = session?.user?.id;
@@ -114,6 +107,17 @@ export function LinkedInCard({
 
   const copyToClipboard = (content: string) => {
     navigator.clipboard.writeText(content);
+    toast.success('Copied to clipboard!', {
+      position: 'bottom-right',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      transition: Bounce,
+    });
     setOnClickCopy(true);
   };
 
@@ -241,12 +245,8 @@ export function LinkedInCard({
           onClick={() => copyToClipboard(shareUrl)}
           className={`flex items-center gap-2 self-center ${isLoading ? 'pointer-events-none opacity-50' : ''}`}
         >
-          {onClickCopy ? (
-            <CircleCheck className="text-white" />
-          ) : (
-            <Copy className="text-white" />
-          )}
-          <span className="text-white font-mono text-xl font-semibold">
+          <Copy className="text-neutral-400 hover:text-neutral-200" />
+          <span className="text-neutral-400 hover:text-neutral-200 font-mono text-xl font-semibold">
             Copy Link
           </span>
         </button>

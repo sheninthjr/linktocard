@@ -104,6 +104,17 @@ export function GithubCard({
 
   const copyToClipboard = (content: string) => {
     navigator.clipboard.writeText(content);
+    toast.success('Copied to clipboard!', {
+      position: 'bottom-right',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      transition: Bounce,
+    });
     setOnClickCopy(true);
   };
 
@@ -236,9 +247,9 @@ export function GithubCard({
           {onClickCopy ? (
             <CircleCheck className="text-white" />
           ) : (
-            <Copy className="text-white" />
+            <Copy className="text-neutral-400 hover:text-neutral-200" />
           )}
-          <span className="text-white font-mono text-xl font-semibold">
+          <span className="text-neutral-400 hover:text-neutral-200 font-mono text-xl font-semibold">
             Copy Link
           </span>
         </button>

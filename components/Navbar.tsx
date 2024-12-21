@@ -60,7 +60,7 @@ export function Navbar() {
         <div className="">
           <a href="/">
             <img
-              src="/L2P.png"
+              src="/l2p.png"
               alt="Logo"
               className="object-cover h-12 w-12 self-center"
             />
