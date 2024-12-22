@@ -7,7 +7,7 @@ import { ArrowRight } from 'lucide-react';
 export default function Landing() {
   return (
     <div className="flex justify-center items-start md:items-center h-screen overflow-hidden">
-      <section className="flex relative flex-col gap-5 space-y-6 md:space-y-0 pt-40 md:pt-0 justify-center items-center max-w-md md:max-w-2xl lg:max-w-3xl xl:max-w-3xl">
+      <section className="flex relative flex-col gap-5 space-y-6 md:space-y-0 pt-32 md:pt-0 justify-center items-center max-w-md md:max-w-2xl lg:max-w-3xl xl:max-w-3xl">
         <motion.h1
           initial={{ opacity: 0, scale: 1.1 }}
           whileInView={{ opacity: 1, scale: 1 }}

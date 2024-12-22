@@ -240,7 +240,7 @@ export function LinkedInCard({
           </button>
         </div>
       </div>
-      <div className="ml-2 mt-4 flex items-center">
+      <div className="ml-2 mt-4 flex items-center self-center md:self-start">
         <button
           onClick={() => copyToClipboard(shareUrl)}
           className={`flex items-center gap-2 self-center ${isLoading ? 'pointer-events-none opacity-50' : ''}`}

@@ -157,19 +157,21 @@ export function GithubCard({
                   <div className="font-bold text-xl text-white font-geistmono">
                     @{userName}
                   </div>
-                  <div className="text-white text-center font-mono truncate">
+                  <div className="text-white text-center font-montserrat truncate">
                     {prStatus === 'Merged' && (
-                      <div className="bg-[#A569EA] flex rounded-xl font-bold pl-3 pr-3 text-xl">
-                        <GitMerge className="w-5 h-5 mr-1 self-center" />{' '}
-                        {prStatus}
-                      </div>
+                      <img
+                        src="./merged.png"
+                        alt="prstatus"
+                        className="rounded-md"
+                        width="85px"
+                      />
                     )}
                     {prStatus === 'Open' && (
                       <img
                         src="./opened.png"
                         alt="prstatus"
                         className="rounded-lg"
-                        width="85px"
+                        width="65px"
                       />
                     )}
                     {prStatus === 'Closed' && (
@@ -177,7 +179,15 @@ export function GithubCard({
                         src="./closed.png"
                         alt="prstatus"
                         className="rounded-lg"
-                        width="100px"
+                        width="85px"
+                      />
+                    )}
+                    {prStatus === '' && (
+                      <img
+                        src="./closed.png"
+                        alt="prstatus"
+                        className="rounded-lg"
+                        width="85px"
                       />
                     )}
                     {!['Merged', 'Open', 'Closed'].includes(prStatus) && (
@@ -239,16 +249,12 @@ export function GithubCard({
           </button>
         </div>
       </div>
-      <div className="ml-2 mt-4 flex items-center">
+      <div className="ml-2 mt-4 flex items-center self-center md:self-start">
         <button
           onClick={() => copyToClipboard(shareUrl)}
           className={`flex items-center gap-2 self-center ${isLoading ? 'pointer-events-none opacity-50' : ''}`}
         >
-          {onClickCopy ? (
-            <CircleCheck className="text-white" />
-          ) : (
-            <Copy className="text-neutral-400 hover:text-neutral-200" />
-          )}
+          <Copy className="text-neutral-400 hover:text-neutral-200" />
           <span className="text-neutral-400 hover:text-neutral-200 font-mono text-xl font-semibold">
             Copy Link
           </span>

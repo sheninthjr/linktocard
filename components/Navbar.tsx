@@ -77,12 +77,12 @@ export function Navbar() {
         </div>
       </div>
       {isSidebarVisible && (
-        <div className="fixed ml-3 top-[5em] font-montserrat mt-2 left-0 w-[94%] rounded-2xl z-10 backdrop-blur-lg bg-white bg-opacity-10 p-4 md:hidden">
+        <div className="fixed ml-3 top-[5em] font-sans mt-2 left-0 w-[94%] rounded-2xl z-10 backdrop-blur-lg bg-white bg-opacity-10 p-4 md:hidden">
           <div className="flex flex-col space-y-4 text-white">
             <Link href="/home" onClick={() => handleClickLink('home')}>
               <div
                 id="home"
-                className={`p-2 pl-3 rounded-full self-center flex text-white font-bold gap-4 text-xl cursor-pointer ${
+                className={`p-2 pl-6 rounded-full self-center flex text-white font-bold gap-4 text-xl cursor-pointer ${
                   isActiveId === 'home' ? 'bg-slate-950' : 'bg-transparent'
                 }`}
               >
@@ -95,7 +95,7 @@ export function Navbar() {
             >
               <div
                 id="dashboard"
-                className={`p-2 pl-3 rounded-full self-center flex text-white font-bold gap-4 text-xl  cursor-pointer ${
+                className={`p-2 pl-6 rounded-full self-center flex text-white font-bold gap-4 text-xl  cursor-pointer ${
                   isActiveId === 'dashboard' ? 'bg-slate-950' : 'bg-transparent'
                 }`}
               >
@@ -105,7 +105,7 @@ export function Navbar() {
             <Link href="/github" onClick={() => handleClickLink('github')}>
               <div
                 id="github"
-                className={`p-2 pl-3 rounded-full self-center flex text-white font-bold gap-4 text-xl cursor-pointer ${
+                className={`p-2 pl-6 rounded-full self-center flex text-white font-bold gap-4 text-xl cursor-pointer ${
                   isActiveId === 'github' ? 'bg-slate-950' : 'bg-transparent'
                 }`}
               >
@@ -115,7 +115,7 @@ export function Navbar() {
             <Link href="/linkedin" onClick={() => handleClickLink('linkedin')}>
               <div
                 id="linkedin"
-                className={`p-2 pl-3 rounded-full self-center flex text-white font-bold gap-4 text-xl cursor-pointer ${
+                className={`p-2 pl-6 rounded-full self-center flex text-white font-bold gap-4 text-xl cursor-pointer ${
                   isActiveId === 'linkedin' ? 'bg-slate-950' : 'bg-transparent'
                 }`}
               >
@@ -125,21 +125,21 @@ export function Navbar() {
             <div className="flex gap-4 ml-2 font-bold text-xl items-center">
               {session?.user.name ? (
                 <div
-                  className="flex gap-3"
+                  className="flex gap-6"
                   onClick={async () => {
                     await signOut({ redirect: false });
                   }}
                 >
-                  <LogOut className="ml-1" /> <span>LOGOUT</span>
+                  <LogOut className="ml-2" /> <span>LOGOUT</span>
                 </div>
               ) : (
                 <div
-                  className="flex gap-3"
+                  className="flex gap-6"
                   onClick={async () => {
                     await signIn();
                   }}
                 >
-                  <LogIn className="ml-1" /> <span>Login</span>
+                  <LogIn className="ml-2" /> <span>Login</span>
                 </div>
               )}
             </div>

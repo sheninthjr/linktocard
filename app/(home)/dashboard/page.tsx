@@ -55,7 +55,7 @@ const Dashboard = () => {
         <div className="font-extrabold font-montserrat text-5xl ml-3 md:ml-0">
           Dashboard
         </div>
-        <div className="flex gap-10 font-roboto text-lg md:text-xl ml-3 md:ml-0 self-center md:self-start">
+        <div className="flex gap-6 md:gap-10 font-roboto text-lg md:text-xl ml-3 md:ml-0 self-center md:self-start">
           <SocialButton
             platform="YOUTUBE"
             isActive={activeState === 'YOUTUBE'}

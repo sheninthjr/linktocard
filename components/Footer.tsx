@@ -6,7 +6,7 @@ export function Footer() {
     <Link
       href={'https://github.com/sheninthjr/linktopost'}
       target="_blank"
-      className="rounded-lg px-2 py-1 bg-slate-800 backdrop-blur-lg  bottom-0 right-1 font-sans absolute flex justify-between gap-2 items-center"
+      className="rounded-lg px-2 py-1 bg-slate-800 backdrop-blur-lg  bottom-1 right-1 font-sans absolute flex justify-between gap-2 items-center"
     >
       <Image
         src={'/github.png'}
