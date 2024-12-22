@@ -100,9 +100,7 @@ const fetchYouTubeData = async (url: string) => {
       console.error('Error extracting views:', error);
     }
     const description =
-      watchPage$('meta[property="og:description"]').attr('content') ||
       watchPage$('meta[name="description"]').attr('content') ||
-      watchPage$('meta[itemprop="description"]').attr('content') ||
       (() => {
         const scripts = watchPage$('script')
           .map((i, el) => watchPage$(el).html())
