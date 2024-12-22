@@ -15,9 +15,18 @@ const fetchYouTubeData = async (url: string) => {
     if (!videoId) {
       throw new Error('Invalid YouTube URL');
     }
-
     const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
-
+    const oembedResponse = await axios.get(
+      `https://www.youtube.com/oembed?url=${watchUrl}&format=json`,
+      {
+        headers: {
+          'User-Agent':
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          Accept: 'application/json',
+          Referer: 'https://www.youtube.com/',
+        },
+      },
+    );
     const watchResponse = await axios.get(watchUrl, {
       headers: {
         'User-Agent':
@@ -35,21 +44,7 @@ const fetchYouTubeData = async (url: string) => {
         'Sec-Fetch-User': '?1',
         'Cache-Control': 'max-age=0',
       },
-      maxRedirects: 5,
-      validateStatus: (status) => status < 500,
     });
-
-    const oembedResponse = await axios.get(
-      `https://www.youtube.com/oembed?url=${watchUrl}&format=json`,
-      {
-        headers: {
-          'User-Agent':
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-          Accept: 'application/json',
-          Referer: 'https://www.youtube.com/',
-        },
-      },
-    );
 
     const watchPage$ = cheerio.load(watchResponse.data);
 
@@ -104,82 +99,15 @@ const fetchYouTubeData = async (url: string) => {
     } catch (error) {
       console.error('Error extracting views:', error);
     }
-
-    let description = '';
-    try {
-      const scripts = watchPage$('script').get();
-      for (const script of scripts) {
-        const content = watchPage$(script).html() || '';
-        if (content.includes('ytInitialData')) {
-          const patterns = [
-            /"description":{"simpleText":"([^"]+)"/,
-            /"description":\s*{\s*"runs":\s*\[\s*{\s*"text":\s*"([^"]+)"/,
-            /"shortDescription":"([^"]+)"/,
-            /"description":"([^"]+)"/,
-            /"videoSecondaryInfoRenderer":{[^}]*"description":{"runs":\[{"text":"([^"]+)"/,
-          ];
-
-          for (const pattern of patterns) {
-            const match = content.match(pattern);
-            if (match && match[1]) {
-              description = match[1].replace(/\\n/g, '\n').replace(/\\"/g, '"');
-              break;
-            }
-          }
-          if (description) break;
-        }
-      }
-
-      if (!description) {
-        const jsonLd = watchPage$('script[type="application/ld+json"]').html();
-        if (jsonLd) {
-          try {
-            const jsonData = JSON.parse(jsonLd);
-            if (jsonData?.description) {
-              description = jsonData.description;
-            }
-          } catch (e) {
-            console.error('Error parsing JSON-LD:', e);
-          }
-        }
-      }
-
-      if (!description) {
-        const metaDescription = watchPage$('meta[name="description"]').attr(
-          'content',
-        );
-        const defaultYouTubeDesc =
-          'Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube.';
-
-        if (metaDescription && metaDescription !== defaultYouTubeDesc) {
-          description = metaDescription;
-        }
-      }
-
-      if (!description) {
-        const patterns = [
-          /"description":\s*{\s*"simpleText":\s*"([^"]+)"/,
-          /"description":\s*"([^"]+)"/,
-        ];
-
-        for (const pattern of patterns) {
-          const match = watchResponse.data.match(pattern);
-          if (match && match[1]) {
-            description = match[1].replace(/\\n/g, '\n').replace(/\\"/g, '"');
-            break;
-          }
-        }
-      }
-    } catch (error) {
-      console.error('Error extracting description:', error);
-    }
+    const { data } = await axios.get(url);
+    const $ = cheerio.load(data);
+    const description = $('meta[name="description"]').attr('content') || '';
 
     const title = oembedResponse.data.title || '';
     const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
     const authorName = oembedResponse.data.author_name || '';
     const authorUrl = oembedResponse.data.author_url || '';
     const userId = authorUrl.split('@')[1] || '';
-
     let profile = null;
     try {
       if (authorUrl) {
@@ -196,7 +124,6 @@ const fetchYouTubeData = async (url: string) => {
     } catch (error) {
       console.error('Error fetching profile:', error);
     }
-
     let imagePath = null;
     if (thumbnailUrl) {
       try {
