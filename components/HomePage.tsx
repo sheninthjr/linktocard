@@ -137,7 +137,7 @@ export function HomePage({ title }: { title: string }) {
       </div>
       <div className="flex justify-center items-center self-center rounded-r-2xl md:pl-20 lg:pl-0 xl:pl-0 w-full md:w-1/2">
         {!isLoading && !buttonClicked && (
-          <span className="font-bold text-center self-center text-xl">
+          <span className="font-bold text-center self-center text-xl font-montserrat">
             Once you generate the post will appear here
           </span>
         )}

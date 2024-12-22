@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Navbar } from '@/components/Navbar';
 import { Sidebar } from '@/components/Sidebar';
+import { Footer } from '@/components/Footer';
 
 export const metadata: Metadata = {
   title: 'LinkToPost',
@@ -18,6 +19,7 @@ export default function RootLayout({
       <body>
         <Navbar />
         <Sidebar />
+        <Footer />
         {children}
       </body>
     </html>

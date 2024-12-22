@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { Post } from '@/types';
+import Link from 'next/link';
 
 const Dashboard = () => {
   const [activeState, setActiveState] = useState('YOUTUBE');
@@ -88,8 +89,17 @@ const Dashboard = () => {
                   </div>
                 </div>
               ))
+            ) : email ? (
+              <p className="text-neutral-300 text-lg font-montserrat">
+                No posts found for this platform
+              </p>
             ) : (
-              <p>No posts found for this platform</p>
+              <Link
+                href={'/api/auth/signin'}
+                className="text-neutral-300 text-lg"
+              >
+                Login to save your post
+              </Link>
             )}
           </div>
         </div>

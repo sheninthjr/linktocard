@@ -25,7 +25,7 @@ const logos = [
 const AnimatedLogoCloud = () => {
   return (
     <div className="py-2 max-w-4xl scale-75">
-      <p className="font-normal tracking-tighter text-xl text-gray-100 bg-gradient-to-br from-zinc-400 via-zinc-300 to-zinc-700 bg-clip-text text-transparent text-center mt-4">
+      <p className="font-normal tracking-tighter font-montserrat text-xl text-gray-100 bg-gradient-to-br from-zinc-400 via-zinc-300 to-zinc-700 bg-clip-text text-transparent text-center mt-4">
         L2P will work for these Apps
       </p>
       <div className="relative bg-page-gradient h-full mx-auto max-w-full mt-14">

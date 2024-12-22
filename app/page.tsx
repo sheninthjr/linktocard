@@ -27,7 +27,7 @@ export default function Landing() {
           className="px-3 md:px-0 text-center w-[85%] font-thin leading-tight"
         >
           <span className="text-2xl font-extrabold">LinktoPost</span>{' '}
-          <span className="text-xl">
+          <span className="text-xl font-montserrat text-neutral-300">
             is powerful post generator for various platforms. Simply paste your
             link and proceed with a single click. Share or download your post,
             and grab a link to send it to anyone effortlessly.
