@@ -99,72 +99,15 @@ const fetchYouTubeData = async (url: string) => {
     } catch (error) {
       console.error('Error extracting views:', error);
     }
-
-    const description = (() => {
-      try {
-        const scripts = watchPage$('script').get();
-        for (const script of scripts) {
-          const content = watchPage$(script).html() || '';
-          if (content.includes('ytInitialData')) {
-            const patterns = [
-              /"description":{"simpleText":"([^"]+)"/,
-              /"description":\s*{\s*"runs":\s*\[\s*{\s*"text":\s*"([^"]+)"/,
-              /"shortDescription":"([^"]+)"/,
-              /"description":"([^"]+)"/,
-            ];
-
-            for (const pattern of patterns) {
-              const match = content.match(pattern);
-              if (match && match[1]) {
-                return match[1].replace(/\\n/g, '\n').replace(/\\"/g, '"');
-              }
-            }
-          }
-        }
-
-        const htmlContent = watchResponse.data;
-        const descriptionPatterns = [
-          /"videoDescriptionRenderer":{[^}]*"description":{"simpleText":"([^"]+)"/,
-          /"videoDescriptionRenderer":{[^}]*"description":{"runs":\[{"text":"([^"]+)"/,
-          /"videoSecondaryInfoRenderer":{[^}]*"description":{"runs":\[{"text":"([^"]+)"/,
-        ];
-
-        for (const pattern of descriptionPatterns) {
-          const match = htmlContent.match(pattern);
-          if (match && match[1]) {
-            return match[1].replace(/\\n/g, '\n').replace(/\\"/g, '"');
-          }
-        }
-        const jsonLd = watchPage$('script[type="application/ld+json"]').html();
-        if (jsonLd) {
-          const jsonData = JSON.parse(jsonLd);
-          if (jsonData?.description) {
-            return jsonData.description;
-          }
-        }
-
-        const metaDescription =
-          watchPage$('meta[name="description"]').attr('content') || '';
-        const defaultYouTubeDesc =
-          'Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube.';
-
-        if (metaDescription && metaDescription !== defaultYouTubeDesc) {
-          return metaDescription;
-        }
-
-        return '';
-      } catch (error) {
-        console.error('Error extracting description:', error);
-        return '';
-      }
-    })();
+    const { data } = await axios.get(url);
+    const $ = cheerio.load(data);
+    const description = $('meta[name="description"]').attr('content') || '';
 
     const title = oembedResponse.data.title || '';
     const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
     const authorName = oembedResponse.data.author_name || '';
     const authorUrl = oembedResponse.data.author_url || '';
     const userId = authorUrl.split('@')[1] || '';
-
     let profile = null;
     try {
       if (authorUrl) {
@@ -181,7 +124,6 @@ const fetchYouTubeData = async (url: string) => {
     } catch (error) {
       console.error('Error fetching profile:', error);
     }
-
     let imagePath = null;
     if (thumbnailUrl) {
       try {
