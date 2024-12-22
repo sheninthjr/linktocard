@@ -99,24 +99,9 @@ const fetchYouTubeData = async (url: string) => {
     } catch (error) {
       console.error('Error extracting views:', error);
     }
-    const description =
-      watchPage$('meta[name="description"]').attr('content') ||
-      (() => {
-        const scripts = watchPage$('script')
-          .map((i, el) => watchPage$(el).html())
-          .get();
-        const descriptionScript = scripts.find((script) =>
-          script?.includes('"description":{'),
-        );
-        if (descriptionScript) {
-          const match = descriptionScript.match(
-            /"description":\s*{\s*"simpleText":\s*"([^"]+)"/,
-          );
-          return match ? match[1] : null;
-        }
-        return null;
-      })() ||
-      '';
+    const { data } = await axios.get(url);
+    const $ = cheerio.load(data);
+    const description = $('meta[name="description"]').attr('content');
 
     const title = oembedResponse.data.title || '';
     const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
