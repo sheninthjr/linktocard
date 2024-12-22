@@ -1,12 +1,26 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 import { NextRequest, NextResponse } from 'next/server';
+import puppeteer from 'puppeteer';
 
 const getVideoId = (url: string) => {
   const regExp =
     /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
   const match = url.match(regExp);
   return match && match[7].length === 11 ? match[7] : null;
+};
+
+const fetchYouTubeDescription = async (url: string) => {
+  const browser = await puppeteer.launch({ headless: true });
+  const page = await browser.newPage();
+  await page.goto(url);
+
+  const description = await page.$eval(
+    'meta[name="description"]',
+    (el) => el.getAttribute('content') || '',
+  );
+  await browser.close();
+  return description;
 };
 
 const fetchYouTubeData = async (url: string) => {
@@ -99,10 +113,8 @@ const fetchYouTubeData = async (url: string) => {
     } catch (error) {
       console.error('Error extracting views:', error);
     }
-    const { data } = await axios.get(url);
-    const $ = cheerio.load(data);
-    const description = $('meta[name="description"]').attr('content') || '';
 
+    const description = await fetchYouTubeDescription(url);
     const title = oembedResponse.data.title || '';
     const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
     const authorName = oembedResponse.data.author_name || '';
