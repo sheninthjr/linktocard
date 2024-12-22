@@ -101,19 +101,19 @@ export function Sidebar() {
             </Link> */}
           </div>
           <button className="text-red-600">
-            {session?.user?.email ? (
+            {!session?.user?.email ? (
               <LogIn
                 onClick={async () => {
                   await signIn();
                 }}
-                className="text-red-400"
+                className="text-blue-400"
               />
             ) : (
               <LogOut
                 onClick={async () => {
                   await signOut({ redirect: false });
                 }}
-                className="text-blue-500"
+                className="text-red-500"
               />
             )}
           </button>
