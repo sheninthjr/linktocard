@@ -1,7 +1,7 @@
 'use client';
 import html2canvas from 'html2canvas-pro';
 import axios from 'axios';
-import { CircleCheck, Copy, Download, GitMerge } from 'lucide-react';
+import { Copy, Download } from 'lucide-react';
 import { GithubResponse, Type } from '../types';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
@@ -19,7 +19,7 @@ export function GithubCard({
 }: GithubResponse) {
   const [shareUrl, setShareUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [onClickCopy, setOnClickCopy] = useState(false);
+  const [, setOnClickCopy] = useState(false);
   const { data: session } = useSession();
 
   const user = session?.user?.id;
