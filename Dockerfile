@@ -1,21 +1,18 @@
 FROM node:20-alpine
 
-ARG DATABASE_URL=postgresql://postgres:sheninthjr@localhost:5432/mydb
-
 WORKDIR /usr/src/app
 
-RUN npm install -g yarn
+RUN npm install yarn
 
 COPY package.json yarn.lock ./
+COPY prisma ./prisma
 
-RUN yarn install --frozen-lockfile
+RUN yarn install
 
 COPY . .
 
-RUN DATABASE_URL=$DATABASE_URL npx prisma generate
-
-RUN DATABASE_URL=$DATABASE_URL yarn build
+RUN npx prisma generate
 
 EXPOSE 3000
 
-CMD ["yarn", "start"]
+CMD ["yarn", "dev"]
