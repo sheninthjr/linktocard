@@ -12,6 +12,7 @@ export async function POST(req: NextRequest) {
       description,
     });
   } catch (e) {
+    console.error(e);
     return NextResponse.json({
       message: 'Failed to fetch the description',
     });
