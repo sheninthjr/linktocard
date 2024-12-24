@@ -99,9 +99,11 @@ const fetchYouTubeData = async (url: string) => {
     } catch (error) {
       console.error('Error extracting views:', error);
     }
-    const { data } = await axios.get(url);
-    const $ = cheerio.load(data);
-    const description = $('meta[name="description"]').attr('content') || '';
+    const { data } = await axios.post(
+      `${process.env.NEXTAUTH_URL}/api/youtube/description`,
+      { url: url },
+    );
+    const description = data.description;
 
     const title = oembedResponse.data.title || '';
     const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
