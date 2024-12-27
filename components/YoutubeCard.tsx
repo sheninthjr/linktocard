@@ -70,7 +70,6 @@ export function YoutubeCard({
   };
 
   const handleShareUpload = async () => {
-    alert('hi');
     if (hasUploaded) return;
     setIsLoading(true);
     const sanitizedTitle = title.replace(/\s+/g, '_').replace(/[^\w\-]+/g, '');
